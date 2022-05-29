@@ -44,7 +44,8 @@ export  type AddWordActionType = {
 };
 
 //all actions types
-type ActionsType = SetWordsActionType;
+type ActionsType = SetWordsActionType | ChangeEngWordActionType | ChangeRusWordActionType | ChangeRatingWordActionType
+    | RemoveWordActionType | AddWordActionType;
 
 //initial state type
 const initialState: Array<WordType> = []
@@ -55,13 +56,62 @@ export const wordsReducer = (state: WordsStateType = initialState, action: Actio
         case 'SET-WORDS': {
             return action.words;
         }
+        case 'CHANGE-ENG-WORD': {
+            const changedState = state.map(word => {
+                if (word.id === action.id) {
+                    return {...word, eng: action.newWord}
+                } else {
+                    return {...word}
+                }
+            });
+            return changedState;
+        }
+        case 'CHANGE-RUS-WORD': {
+            const changedState = state.map(word => {
+                if (word.id === action.id) {
+                    return {...word, rus: action.newWord}
+                } else {
+                    return {...word}
+                }
+            });
+            return changedState;
+        }
+        case 'CHANGE-RATING-WORD': {
+            const changedState = state.map(word => {
+                if (word.id === action.id) {
+                    return {...word, rating: action.newRating}
+                } else {
+                    return {...word}
+                }
+            });
+            return changedState;
+        }
+        case 'REMOVE-WORD': {
+            const changedState = state.map(word => {
+                return {...word}
+            });
+            const targetIndex = changedState.findIndex(word => {
+                return word.id === action.id
+            });
+            if (targetIndex) {
+                changedState.splice(targetIndex, 1)
+            }
+            return changedState;
+        }
+        case 'ADD-WORD': {
+            const changedState = state.map(word => {
+                return {...word}
+            });
+            changedState.push(action.word);
+            return changedState;
+        }
         default:
             return state;
     }
 }
 
 //action creators
-export const setWordsAC = (taskId: string, words: WordsStateType): SetWordsActionType => {
+export const setWordsAC = (words: WordsStateType): SetWordsActionType => {
     return {type: 'SET-WORDS', words}
 }
 
