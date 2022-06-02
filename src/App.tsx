@@ -7,7 +7,7 @@ function App() {
     return (
         <div className="App">
             <Header/>
-            <h1 style={{textAlign: 'center'}}>Language learn app</h1>
+            <h1 style={{textAlign: 'center'}}>Learn Language</h1>
             <AddWordsPage/>
         </div>
     );

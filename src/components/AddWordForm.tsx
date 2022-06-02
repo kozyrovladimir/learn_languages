@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, Container, TextField} from "@mui/material";
+import {Box, Button, TextField} from "@mui/material";
 
 type AddWordFormType = {
     rus: string,
@@ -13,9 +13,9 @@ type AddWordFormType = {
 
 const AddWordForm = (props: AddWordFormType) => {
     return (
-        <Container>
+        <Box>
             <h3>Добавить новое слово для изучения:</h3>
-            <Box sx={{display: 'flex'}}>
+            <Box sx={{paddingBottom: 2}}>
                 <TextField
                     value={props.rus}
                     onChange={props.rusInputOnChangeHandler}
@@ -41,7 +41,7 @@ const AddWordForm = (props: AddWordFormType) => {
                     Добавить
                 </Button>
             </Box>
-        </Container>
+        </Box>
     );
 };
 

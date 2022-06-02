@@ -16,7 +16,7 @@ function createData(
     carbs: number,
     protein: number,
 ) {
-    return { name, calories, fat, carbs, protein };
+    return {name, calories, fat, carbs, protein};
 }
 
 const rows = [
@@ -34,7 +34,7 @@ type WordTablePropsType = {
 export default function WordTable(props: WordTablePropsType) {
     return (
         <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{minWidth: 650}} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Слово на русском:</TableCell>
@@ -48,7 +48,7 @@ export default function WordTable(props: WordTablePropsType) {
                     {props.words.map((word) => (
                         <TableRow
                             key={word.id}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
                             <TableCell component="th" scope="row">
                                 {word.rus}

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import AddWordForm from "./AddWordForm";
-import {Container} from "@mui/material";
+import {Box, Container} from "@mui/material";
 import WordTable from './WordTable';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store/store";
@@ -12,14 +12,17 @@ const AddWordsPage = () => {
     const [errMessRus, setErrMessRus] = useState<string>('');
     const [errMessEng, setErrMessEng] = useState<string>('');
 
-    const words = useSelector<AppRootStateType, WordsStateType>(state =>  state.words);
+    const words = useSelector<AppRootStateType, WordsStateType>(state => state.words);
     const dispatch = useDispatch();
+
     function rusOnChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
         setRusWord(e.currentTarget.value);
     };
+
     function engOnChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
         setEngWord(e.currentTarget.value);
     };
+
     function onSubmit() {
         dispatch(addWordAC(engWord, rusWord));
         setRusWord('');
