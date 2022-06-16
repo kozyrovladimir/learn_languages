@@ -1,44 +1,36 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AddWordForm from "./AddWordForm";
-import {Box, Container} from "@mui/material";
+import {Container} from "@mui/material";
 import WordTable from './WordTable';
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../store/store";
 import {addWordAC, WordsStateType} from "../store/words-store";
+import {useInput} from "../utils/utils";
 
 const AddWordsPage = () => {
-    const [rusWord, setRusWord] = useState<string>('');
-    const [engWord, setEngWord] = useState<string>('');
-    const [errMessRus, setErrMessRus] = useState<string>('');
-    const [errMessEng, setErrMessEng] = useState<string>('');
+    //using custom hook for handling inputs
+    const rus = useInput('');
+    const eng = useInput('');
 
     const words = useSelector<AppRootStateType, WordsStateType>(state => state.words);
     const dispatch = useDispatch();
 
-    function rusOnChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-        setRusWord(e.currentTarget.value);
-    };
-
-    function engOnChangeHandler(e: React.ChangeEvent<HTMLInputElement>) {
-        setEngWord(e.currentTarget.value);
-    };
-
     function onSubmit() {
-        dispatch(addWordAC(engWord, rusWord));
-        setRusWord('');
-        setEngWord('');
-        console.log('Rus:', rusWord, 'Eng:', engWord);
+        dispatch(addWordAC(rus.value, eng.value));
+        rus.setValue('');
+        eng.setValue('');
+        console.log('Rus:', rus.value, 'Eng:', eng.value);
     }
 
     return (
         <Container>
             <AddWordForm
-                rus={rusWord}
-                eng={engWord}
-                errMessRus={errMessRus}
-                errMessEng={errMessEng}
-                rusInputOnChangeHandler={rusOnChangeHandler}
-                engInputOnChangeHandler={engOnChangeHandler}
+                rus={rus.value}
+                eng={eng.value}
+                errMessRus={rus.error}
+                errMessEng={eng.error}
+                rusInputOnChangeHandler={rus.onChange}
+                engInputOnChangeHandler={eng.onChange}
                 onSubmit={onSubmit}
             />
             <WordTable
