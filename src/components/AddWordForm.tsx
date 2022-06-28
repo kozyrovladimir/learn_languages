@@ -12,10 +12,12 @@ const AddWordForm = () => {
     const validationSchema = yup.object({
         rus: yup.string()
             .max(20, 'Слово не может быть больше 20 символов!')
-            .required('Поле обязательно!'),
+            .required('Поле обязательно!')
+            .trim(),
         eng: yup.string()
             .max(20, 'Слово не может быть больше 20 символов!')
-            .required('Поле обязательно!'),
+            .required('Поле обязательно!')
+            .trim(),
     });
 
     const formik = useFormik({
