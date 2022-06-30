@@ -1,14 +1,10 @@
-import {
-    addWordAC,
-    changeEngWordAC,
-    changeRatingWordAC,
-    changeRusWordAC, removeWordAC,
-    setWordsAC,
-    wordsReducer,
-    WordsStateType, WordType
-} from "./words-store";
+import wordsReducer, {wordsSlice} from "./words-store";
+import {WordsStateType} from "./words-store";
 import {v1} from "uuid";
 
+const {addWord, setWords, changeEngWord, changeRusWord, changeRatingWord, removeWord} = wordsSlice.actions;
+
+//need to fix test 'correct set store'
 test('correct set store', () => {
     const initialState: WordsStateType = [];
     const newWords: WordsStateType = [
@@ -35,8 +31,7 @@ test('correct set store', () => {
         },
     ]
 
-   const newState = wordsReducer(initialState, setWordsAC(newWords));
-
+    const newState = wordsReducer(initialState, setWords({words: newWords}));
     expect(newState.length).toBe(3);
     expect(newState[0].rus).toBe('картошка');
     expect(newState[2].eng).toBe('hand');
@@ -68,7 +63,7 @@ test('correct change eng word', () => {
         },
     ];
 
-    const newState = wordsReducer(initialState, changeEngWordAC('hand', '3'));
+    const newState = wordsReducer(initialState, changeEngWord({newWord: 'hand', id: '3'}));
 
     expect(newState[2].eng).toBe('hand');
     expect(newState[2].rating).toBe(3);
@@ -99,7 +94,7 @@ test('correct change rus word', () => {
         },
     ];
 
-    const newState = wordsReducer(initialState, changeRusWordAC('кот', '2'));
+    const newState = wordsReducer(initialState, changeRusWord({newWord: 'кот', id: '2'}));
 
     expect(newState[1].rus).toBe('кот');
     expect(newState[1].rating).toBe(2);
@@ -130,7 +125,7 @@ test('correct change rating', () => {
         },
     ];
 
-    const newState = wordsReducer(initialState, changeRatingWordAC(2, '1'));
+    const newState = wordsReducer(initialState, changeRatingWord({newRating: 2, id: '1'}));
 
     expect(newState[0].rating).toBe(2);
     expect(newState[2].rating).toBe(3);
@@ -161,7 +156,7 @@ test('correct remove word', () => {
         },
     ];
 
-    const newState = wordsReducer(initialState, removeWordAC('2'));
+    const newState = wordsReducer(initialState, removeWord({id: '2'}));
 
     expect(newState.length).toBe(2);
     expect(newState[1].id).toBe('3');
@@ -192,7 +187,7 @@ test('correct add word', () => {
         },
     ];
 
-    const newState = wordsReducer(initialState, addWordAC('array', 'массив'));
+    const newState = wordsReducer(initialState, addWord({rus: 'массив', eng: 'array'}));
 
     expect(newState.length).toBe(4);
     expect(newState[3].eng).toBe('array');

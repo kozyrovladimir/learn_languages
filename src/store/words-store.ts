@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 //word types
 export type WordType = {
@@ -12,125 +13,52 @@ export type WordType = {
 //store types
 export type WordsStateType = Array<WordType>;
 
-//action types
-export type SetWordsActionType = {
-    type: 'SET-WORDS',
-    words: WordsStateType,
-}
-
-export  type ChangeEngWordActionType = {
-    type: 'CHANGE-ENG-WORD',
-    id: string,
-    newWord: string,
-};
-
-export  type ChangeRusWordActionType = {
-    type: 'CHANGE-RUS-WORD',
-    id: string,
-    newWord: string,
-};
-export  type ChangeRatingWordActionType = {
-    type: 'CHANGE-RATING-WORD',
-    id: string,
-    newRating: 1 | 2 | 3,
-};
-export  type RemoveWordActionType = {
-    type: 'REMOVE-WORD',
-    id: string,
-};
-export  type AddWordActionType = {
-    type: 'ADD-WORD',
-    word: WordType,
-};
-
-//all actions types
-type ActionsType = SetWordsActionType | ChangeEngWordActionType | ChangeRusWordActionType | ChangeRatingWordActionType
-    | RemoveWordActionType | AddWordActionType;
-
 //initial state type
-const initialState: Array<WordType> = []
+const initialState: Array<WordType> = [];
 
-//reducer
-export const wordsReducer = (state: WordsStateType = initialState, action: ActionsType): WordsStateType => {
-    switch (action.type) {
-        case 'SET-WORDS': {
-            return action.words;
-        }
-        case 'CHANGE-ENG-WORD': {
-            const changedState = state.map(word => {
-                if (word.id === action.id) {
-                    return {...word, eng: action.newWord}
-                } else {
-                    return {...word}
-                }
-            });
-            return changedState;
-        }
-        case 'CHANGE-RUS-WORD': {
-            const changedState = state.map(word => {
-                if (word.id === action.id) {
-                    return {...word, rus: action.newWord}
-                } else {
-                    return {...word}
-                }
-            });
-            return changedState;
-        }
-        case 'CHANGE-RATING-WORD': {
-            const changedState = state.map(word => {
-                if (word.id === action.id) {
-                    return {...word, rating: action.newRating}
-                } else {
-                    return {...word}
-                }
-            });
-            return changedState;
-        }
-        case 'REMOVE-WORD': {
-            const changedState = state.map(word => {
-                return {...word}
-            });
-            const targetIndex = changedState.findIndex(word => {
-                return word.id === action.id
+//redux toolkit
+
+export const wordsSlice = createSlice({
+    name: 'words',
+    initialState: initialState,
+    reducers: {
+        //need to fix reducer 'setWords'
+        setWords(state = initialState, action: PayloadAction<{ words: WordsStateType }>) {
+            state.length = 0;
+            state = [...action.payload.words];
+        },
+        changeEngWord(state = initialState, action: PayloadAction<{ newWord: string, id: string }>) {
+            const targetWord = state.find(word => word.id === action.payload.id);
+            if (targetWord) {
+                targetWord.eng = action.payload.newWord;
+            }
+        },
+        changeRusWord(state = initialState, action: PayloadAction<{ newWord: string, id: string }>) {
+            const targetWord = state.find(word => word.id === action.payload.id);
+            if (targetWord) {
+                targetWord.rus = action.payload.newWord;
+            }
+        },
+        changeRatingWord(state = initialState, action: PayloadAction<{ newRating: 1 | 2 | 3, id: string }>) {
+            const targetWord = state.find(word => word.id === action.payload.id);
+            if (targetWord) {
+                targetWord.rating = action.payload.newRating;
+            }
+        },
+        removeWord(state = initialState, action: PayloadAction<{ id: string }>) {
+            const targetIndex = state.findIndex(word => {
+                return word.id === action.payload.id
             });
             if (targetIndex) {
-                changedState.splice(targetIndex, 1)
+                state.splice(targetIndex, 1)
             }
-            return changedState;
+        },
+        addWord(state, action: PayloadAction<{ eng: string, rus: string }>) {
+            const rus = action.payload.rus;
+            const eng = action.payload.eng;
+            state.push({rus, eng, id: v1(), date: new Date(), rating: 1});
         }
-        case 'ADD-WORD': {
-            const changedState = state.map(word => {
-                return {...word}
-            });
-            changedState.push(action.word);
-            return changedState;
-        }
-        default:
-            return state;
     }
-}
+});
 
-//action creators
-export const setWordsAC = (words: WordsStateType): SetWordsActionType => {
-    return {type: 'SET-WORDS', words}
-}
-
-export const changeEngWordAC = (newWord: string, id: string): ChangeEngWordActionType => {
-    return {type: 'CHANGE-ENG-WORD', newWord, id}
-}
-
-export const changeRusWordAC = (newWord: string, id: string): ChangeRusWordActionType => {
-    return {type: 'CHANGE-RUS-WORD', newWord, id}
-}
-
-export const changeRatingWordAC = (newRating: 1 | 2 | 3, id: string): ChangeRatingWordActionType => {
-    return {type: 'CHANGE-RATING-WORD', newRating, id}
-}
-
-export const removeWordAC = (id: string): RemoveWordActionType => {
-    return {type: 'REMOVE-WORD', id}
-}
-
-export const addWordAC = (eng: string, rus: string): AddWordActionType => {
-    return {type: 'ADD-WORD', word: {rus, eng, id: v1(), date: new Date(), rating: 1}}
-}
+export default wordsSlice.reducer;

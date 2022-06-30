@@ -2,11 +2,12 @@ import React from 'react';
 import {Box, Button, TextField} from "@mui/material";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
-import {addWordAC} from "../store/words-store";
+import {wordsSlice} from "../store/words-store";
+import {useAppDispatch} from "../hooks/redux";
 
 const AddWordForm = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
+    const {addWord} = wordsSlice.actions;
 
     //using formik
     const validationSchema = yup.object({
@@ -27,7 +28,7 @@ const AddWordForm = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            dispatch(addWordAC(values.rus, values.eng));
+            dispatch(addWord({eng: values.rus, rus: values.eng}));
             values.rus = '';
             values.eng = '';
             formik.touched.eng = false;

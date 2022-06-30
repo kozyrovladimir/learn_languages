@@ -2,12 +2,10 @@ import React from 'react';
 import AddWordForm from "./AddWordForm";
 import {Container} from "@mui/material";
 import WordTable from './WordTable';
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../store/store";
-import {WordsStateType} from "../store/words-store";
+import {useAppSelector} from "../hooks/redux";
 
 const AddWordsPage = () => {
-    const words = useSelector<AppRootStateType, WordsStateType>(state => state.words);
+    const words = useAppSelector(state => state.wordsReducer)
     return (
         <Container>
             <AddWordForm/>
