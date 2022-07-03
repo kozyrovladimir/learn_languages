@@ -45,8 +45,11 @@ export default function WordTable(props: WordTablePropsType) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.words.map((word) => (
-                        <TableRow
+                    {props.words.map((word) => {
+                        const date = new Date(word.date);
+
+                        return (
+                            <TableRow
                             key={word.id}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
                         >
@@ -57,7 +60,7 @@ export default function WordTable(props: WordTablePropsType) {
                                 {word.eng}
                             </TableCell>
                             <TableCell>{word.rating}</TableCell>
-                            <TableCell>{word.date.toLocaleDateString()} {word.date.toLocaleTimeString()}</TableCell>
+                            <TableCell>{date.toLocaleDateString()} {date.toLocaleTimeString()}</TableCell>
                             <TableCell sx={{display: 'flex', flexDirection: 'column'}}>
                                 <Button
                                     color={"error"}
@@ -72,7 +75,7 @@ export default function WordTable(props: WordTablePropsType) {
                                 >в изученные</Button>
                             </TableCell>
                         </TableRow>
-                    ))}
+                    )})}
                 </TableBody>
             </Table>
         </TableContainer>
