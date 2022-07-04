@@ -28,7 +28,7 @@ const AddWordForm = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            dispatch(addWord({eng: values.rus, rus: values.eng}));
+            dispatch(addWord({eng: values.eng, rus: values.rus}));
             values.rus = '';
             values.eng = '';
             formik.touched.eng = false;
