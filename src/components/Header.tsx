@@ -1,22 +1,31 @@
 import React from 'react';
-import {Box, Tab, Tabs} from "@mui/material";
+import {Box, Container, Tab, Tabs} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const Header = () => {
     const [value, setValue] = React.useState(0);
 
+    let navigate = useNavigate();
+
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
+        if(newValue === 0) {
+            navigate('/')
+        }
+        if(newValue === 1) {
+            navigate('/learn-words')
+        }
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Container>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <Tab label="Добавить слова" />
                     <Tab label="Изучать" />
                 </Tabs>
             </Box>
-        </Box>
+        </Container>
     );
 };
 
