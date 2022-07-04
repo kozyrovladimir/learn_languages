@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import {wordsSlice, WordsStateType} from "../store/words-store";
 import Button from '@mui/material/Button';
 import {useAppDispatch} from "../hooks/redux";
-import {Icon} from "@mui/material";
+import StarRating from "./StarRating";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -47,15 +47,16 @@ export default function WordTable(props: WordTablePropsType) {
                             <TableCell component="th" scope="row">
                                 {word.eng}
                             </TableCell>
-                            <TableCell>{word.rating}
+                            <TableCell>
+                                <StarRating starAmount={word.rating}/>
                             </TableCell>
                             <TableCell>{date.toLocaleDateString()} {date.toLocaleTimeString()}</TableCell>
                             <TableCell sx={{display: 'flex', flexDirection: 'column'}}>
                                 <Button
                                     onClick={() => {
-                                        dispatch(changeRatingWord({id: word.id, newRating: 1}));
+                                        dispatch(changeRatingWord({id: word.id, newRating: 0}));
                                     }}
-                                    disabled={word.rating === 1 ? true : false}
+                                    disabled={word.rating === 0}
                                     color={"error"}
                                     sx={{marginBottom: 1}}
                                     variant={'outlined'}
@@ -65,7 +66,7 @@ export default function WordTable(props: WordTablePropsType) {
                                     onClick={() => {
                                         dispatch(changeRatingWord({id: word.id, newRating: 3}));
                                     }}
-                                    disabled={word.rating === 3 ? true : false}
+                                    disabled={word.rating === 3}
                                     color={"success"}
                                     variant={'outlined'}
                                     size={'small'}

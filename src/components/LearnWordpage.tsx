@@ -21,6 +21,9 @@ const LearnWordpage = () => {
 
     //change rating
     function setRatingUp(word: WordType) {
+        if (word.rating === 0) {
+            dispatch(changeRatingWord({id: word.id, newRating: 1}))
+        }
         if (word.rating === 1) {
             dispatch(changeRatingWord({id: word.id, newRating: 2}))
         }
@@ -35,6 +38,9 @@ const LearnWordpage = () => {
         }
         if (word.rating === 2) {
             dispatch(changeRatingWord({id: word.id, newRating: 1}))
+        }
+        if (word.rating === 1) {
+            dispatch(changeRatingWord({id: word.id, newRating: 0}))
         }
     }
 
@@ -88,7 +94,7 @@ const LearnWordpage = () => {
     if(wordToStudy) {
         return (
         <Container>
-            <Typography variant='h3' align='center' sx={{mb: 2}}>{wordToStudy.rus}</Typography>
+            <Typography variant='h4' align='center' sx={{mb: 2}}>Переведите: <span style={{color: 'red'}}>{wordToStudy.rus}</span></Typography>
             <Box sx={{mb: 2}}>
                 <TextField
                     disabled={!!answerStatus}
