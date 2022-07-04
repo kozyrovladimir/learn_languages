@@ -28,7 +28,7 @@ const AddWordForm = () => {
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            dispatch(addWord({eng: values.rus, rus: values.eng}));
+            dispatch(addWord({eng: values.eng, rus: values.rus}));
             values.rus = '';
             values.eng = '';
             formik.touched.eng = false;
@@ -49,7 +49,9 @@ const AddWordForm = () => {
                     name="rus"
                     label="Слово на русском:"
                     variant="outlined"
-                    sx={{marginRight: 2}}/>
+                    sx={{marginRight: 2}}
+                    size={'small'}
+                />
                 <TextField
                     value={formik.values.eng}
                     onChange={formik.handleChange}
@@ -59,7 +61,9 @@ const AddWordForm = () => {
                     name="eng"
                     label="Слово на английском:"
                     variant="outlined"
-                    sx={{marginRight: 2}}/>
+                    sx={{marginRight: 2}}
+                    size={'small'}
+                />
                 <Button
                     onClick={formik.submitForm}
                     variant={'outlined'}
