@@ -46,7 +46,7 @@ const LearnWordpage = () => {
     //set random word during initialisation this component
     useEffect(() => {
         setWord();
-    }, [setWord])
+    }, [])
 
     //state of current word for learn
     const [wordToStudy, setWordToStudy] = useState<WordType | null>(null);
