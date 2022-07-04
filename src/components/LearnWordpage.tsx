@@ -91,9 +91,10 @@ const LearnWordpage = () => {
     if(wordToStudy) {
         return (
         <Container>
-            <Typography variant='h3' align='center'>{wordToStudy.eng}</Typography>
+            <Typography variant='h3' align='center' sx={{mb: 2}}>{wordToStudy.rus}</Typography>
             <Box sx={{mb: 2}}>
                 <TextField
+                    disabled={!!answerStatus}
                     value={formik.values.answer}
                     onChange={formik.handleChange}
                     error={formik.touched.answer && Boolean(formik.errors.answer)}
@@ -105,6 +106,7 @@ const LearnWordpage = () => {
                     sx={{mr: 2}}
                 />
                 <Button
+                    disabled={!!answerStatus}
                     variant='outlined'
                     size='large'
                     sx={{mr: 2}}
@@ -116,6 +118,7 @@ const LearnWordpage = () => {
                     onClick={() => {
                         setAnswerStatus(null);
                         setWord();
+                        formik.values.answer = '';
                     }}
                     variant={'outlined'}
                     size={'large'}
@@ -124,8 +127,8 @@ const LearnWordpage = () => {
                 </Button>
             </Box>
             <Box>
-                {answerStatus ? <Typography variant='h5' align='center' color='green'>{answerStatus}</Typography> : null}
-                <Typography variant='h5' align='center' color='darkblue'>{wordToStudy.eng}</Typography>
+                {answerStatus ? <Typography variant='h5' align='center' color={answerStatus === 'He верно!' ? 'red' : 'green'}>{answerStatus}</Typography> : null}
+                {answerStatus ? <Typography variant='h5' align='center' color='darkblue'>Правильный ответ: {wordToStudy.eng}</Typography> : null}
             </Box>
         </Container>
         )
