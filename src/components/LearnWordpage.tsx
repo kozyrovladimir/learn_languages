@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Container, containerClasses, TextField, Typography} from "@mui/material";
+import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import {wordsSlice, WordType} from "../store/words-store";
 import {useAppDispatch, useAppSelector} from "../hooks/redux";
 import {getRandomItem} from "../utils/utils";
@@ -13,6 +13,7 @@ const LearnWordpage = () => {
     const {changeRatingWord} = wordsSlice.actions;
 
     //refresh word to study
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function setWord() {
         const initialWord = getRandomItem(words);
         setWordToStudy(initialWord);
@@ -22,34 +23,30 @@ const LearnWordpage = () => {
     function setRatingUp(word: WordType) {
         if (word.rating === 1) {
             dispatch(changeRatingWord({id: word.id, newRating: 2}))
-        };
+        }
         if (word.rating === 2) {
             dispatch(changeRatingWord({id: word.id, newRating: 3}))
-        };
-    };
+        }
+    }
 
     function setRatingDown(word: WordType) {
         if (word.rating === 3) {
             dispatch(changeRatingWord({id: word.id, newRating: 2}))
-        };
+        }
         if (word.rating === 2) {
             dispatch(changeRatingWord({id: word.id, newRating: 1}))
-        };
+        }
     }
 
     //check answer
     function checkAnswer(word: string, wordToStudy: WordType){
-        if (wordToStudy && word === wordToStudy.eng) {
-            return true;
-        } else {
-            return false
-        }
+        return wordToStudy && word === wordToStudy.eng;
     }
 
     //set random word during initialisation this component
     useEffect(() => {
         setWord();
-    }, [])
+    }, [setWord])
 
     //state of current word for learn
     const [wordToStudy, setWordToStudy] = useState<WordType | null>(null);
