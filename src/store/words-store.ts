@@ -58,7 +58,7 @@ export const wordsSlice = createSlice({
         addWord(state, action: PayloadAction<{ eng: string, rus: string }>) {
             const rus = action.payload.rus;
             const eng = action.payload.eng;
-            state.push({rus, eng, id: v1(), date: new Date(), rating: 1});
+            state.push({rus, eng, id: v1(), date: new Date(), rating: 0});
         }
     }
 });
