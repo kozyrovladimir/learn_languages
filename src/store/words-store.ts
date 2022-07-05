@@ -41,7 +41,7 @@ export const wordsSlice = createSlice({
                 targetWord.rus = action.payload.newWord;
             }
         },
-        changeRatingWord(state = initialState, action: PayloadAction<{ newRating: 1 | 2 | 3, id: string }>) {
+        changeRatingWord(state = initialState, action: PayloadAction<{ newRating: RatingType, id: string }>) {
             const targetWord = state.find(word => word.id === action.payload.id);
             if (targetWord) {
                 targetWord.rating = action.payload.newRating;
