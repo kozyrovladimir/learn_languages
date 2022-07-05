@@ -21,6 +21,9 @@ const LearnWordpage = () => {
 
     //change rating
     function setRatingUp(word: WordType) {
+        if (word.rating === 0) {
+            dispatch(changeRatingWord({id: word.id, newRating: 1}))
+        }
         if (word.rating === 1) {
             dispatch(changeRatingWord({id: word.id, newRating: 2}))
         }
@@ -35,6 +38,9 @@ const LearnWordpage = () => {
         }
         if (word.rating === 2) {
             dispatch(changeRatingWord({id: word.id, newRating: 1}))
+        }
+        if (word.rating === 1) {
+            dispatch(changeRatingWord({id: word.id, newRating: 0}))
         }
     }
 
