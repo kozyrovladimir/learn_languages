@@ -12,11 +12,11 @@ const AddWordForm = () => {
     //using formik
     const validationSchema = yup.object({
         rus: yup.string()
-            .max(20, 'Слово не может быть больше 20 символов!')
+            .max(20, 'Максимум 20 символов!')
             .required('Поле обязательно!')
             .trim(),
         eng: yup.string()
-            .max(20, 'Слово не может быть больше 20 символов!')
+            .max(20, 'Максимум 20 символов!')
             .required('Поле обязательно!')
             .trim(),
     });
@@ -38,7 +38,7 @@ const AddWordForm = () => {
 
     return (
         <Box>
-            <h3>Добавить новое слово для изучения:</h3>
+            <h3>Добавить для изучения:</h3>
             <Box sx={{paddingBottom: 2}}>
                 <TextField
                     value={formik.values.rus}
@@ -47,7 +47,7 @@ const AddWordForm = () => {
                     helperText={formik.touched.rus && formik.errors.rus}
                     id="rus"
                     name="rus"
-                    label="Слово на русском:"
+                    label="Rus:"
                     variant="outlined"
                     sx={{marginRight: 2}}
                     size={'small'}
@@ -59,7 +59,7 @@ const AddWordForm = () => {
                     helperText={formik.touched.eng && formik.errors.eng}
                     id="eng"
                     name="eng"
-                    label="Слово на английском:"
+                    label="Eng:"
                     variant="outlined"
                     sx={{marginRight: 2}}
                     size={'small'}

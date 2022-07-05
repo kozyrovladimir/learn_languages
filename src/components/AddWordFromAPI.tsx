@@ -17,7 +17,7 @@ const AddWordFromApi = () => {
     //using formik
     const validationSchema = yup.object({
         translateWord: yup.string()
-            .max(20, 'Слово не может быть больше 20 символов!')
+            .max(20, 'Не больше 20 символов!')
             .required('Поле обязательно!')
             .trim(),
     });
@@ -45,7 +45,7 @@ const AddWordFromApi = () => {
 
     return (
             <>
-                <h3>Перевести слово:</h3>
+                <h3>Перевести:</h3>
                 <Box sx={{mb: 2}}>
                     <TextField
                         value={formik.values.translateWord}
