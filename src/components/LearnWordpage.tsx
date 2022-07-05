@@ -94,7 +94,7 @@ const LearnWordpage = () => {
     if(wordToStudy) {
         return (
         <Container>
-            <Typography variant='h3' align='center' sx={{mb: 2}}>{wordToStudy.rus}</Typography>
+            <Typography variant='h4' align='center' sx={{mb: 2}}>Переведите: <span style={{color: 'red'}}>{wordToStudy.rus}</span></Typography>
             <Box sx={{mb: 2}}>
                 <TextField
                     disabled={!!answerStatus}
