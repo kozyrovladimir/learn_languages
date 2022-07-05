@@ -2,10 +2,12 @@ import {v1} from 'uuid';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 //word types
+export type RatingType = 0 | 1 | 2 | 3;
+
 export type WordType = {
     eng: string,
     rus: string,
-    rating: 1 | 2 | 3,
+    rating: RatingType,
     id: string,
     date: Date,
 }
