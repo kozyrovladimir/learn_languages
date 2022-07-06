@@ -10,6 +10,12 @@ import {wordsSlice, WordsStateType} from "../store/words-store";
 import Button from '@mui/material/Button';
 import {useAppDispatch} from "../hooks/redux";
 import StarRating from "./StarRating";
+import Typography from '@mui/material/Typography';
+import {Box, IconButton, Stack} from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import DoneIcon from '@mui/icons-material/Done';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -35,42 +41,64 @@ export default function WordTable(props: WordTablePropsType) {
                 <TableBody>
                     {props.words.map((word) => {
                         const date = new Date(word.date);
+                        const wordColor = word.rating === 3 ? '#00d700' : '';
+                        const backgroundColorRow = word.rating === 3 ? '#f6fff6' : '';
 
                         return (
                             <TableRow
                             key={word.id}
-                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                            sx={{'&:last-child td, &:last-child th': {border: 0}, backgroundColor: backgroundColorRow, '&:hover': {backgroundColor: 'rgba(255,196,0,0.13)'}}}
                         >
                             <TableCell component="th" scope="row">
-                                {word.rus}
+                                <Typography sx={{color: wordColor}}>
+                                    {word.rus}
+                                </Typography>
                             </TableCell>
                             <TableCell component="th" scope="row">
-                                {word.eng}
+                                <Typography sx={{color: wordColor}}>
+                                    {word.eng}
+                                </Typography>
                             </TableCell>
                             <TableCell>
                                 <StarRating starAmount={word.rating}/>
                             </TableCell>
                             <TableCell>{date.toLocaleDateString()} {date.toLocaleTimeString()}</TableCell>
                             <TableCell sx={{display: 'flex', flexDirection: 'column'}}>
-                                <Button
-                                    onClick={() => {
-                                        dispatch(changeRatingWord({id: word.id, newRating: 0}));
-                                    }}
-                                    disabled={word.rating === 0}
-                                    color={"error"}
-                                    sx={{marginBottom: 1}}
-                                    variant={'outlined'}
-                                    size={'small'}
-                                >изучать заново</Button>
-                                <Button
-                                    onClick={() => {
-                                        dispatch(changeRatingWord({id: word.id, newRating: 3}));
-                                    }}
-                                    disabled={word.rating === 3}
-                                    color={"success"}
-                                    variant={'outlined'}
-                                    size={'small'}
-                                >в изученные</Button>
+                                {/*<Box>*/}
+                                    <Stack direction="row" spacing={1} justifyContent="center">
+                                        <IconButton aria-label="edit">
+                                            <EditIcon color={'action'}/>
+                                        </IconButton>
+                                        <IconButton aria-label="edit">
+                                            <DoneIcon color={'success'}/>
+                                        </IconButton>
+                                        <IconButton aria-label="edit">
+                                            <ReplayIcon color={'warning'}/>
+                                        </IconButton>
+                                        <IconButton aria-label="delete">
+                                            <DeleteIcon color={'error'}/>
+                                        </IconButton>
+                                    </Stack>
+                                {/*</Box>*/}
+                                {/*<Button*/}
+                                {/*    onClick={() => {*/}
+                                {/*        dispatch(changeRatingWord({id: word.id, newRating: 0}));*/}
+                                {/*    }}*/}
+                                {/*    disabled={word.rating === 0}*/}
+                                {/*    color={"error"}*/}
+                                {/*    sx={{marginBottom: 1}}*/}
+                                {/*    variant={'outlined'}*/}
+                                {/*    size={'small'}*/}
+                                {/*>изучать заново</Button>*/}
+                                {/*<Button*/}
+                                {/*    onClick={() => {*/}
+                                {/*        dispatch(changeRatingWord({id: word.id, newRating: 3}));*/}
+                                {/*    }}*/}
+                                {/*    disabled={word.rating === 3}*/}
+                                {/*    color={"success"}*/}
+                                {/*    variant={'outlined'}*/}
+                                {/*    size={'small'}*/}
+                                {/*>в изученные</Button>*/}
                             </TableCell>
                         </TableRow>
                     )})}
