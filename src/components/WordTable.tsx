@@ -50,7 +50,7 @@ export default function WordTable(props: WordTablePropsType) {
                                     '&:last-child td, &:last-child th': {border: 0},
                                     backgroundColor: backgroundColorRow,
                                     '&:hover': {backgroundColor: 'rgba(255,196,0,0.13)',
-                                    transition: 'all 200ms ease'}
+                                    transition: 'all 100ms ease-in-out'}
                                 }}
                             >
                                 <TableCell component="th" scope="row">
