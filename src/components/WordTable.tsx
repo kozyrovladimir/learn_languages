@@ -23,7 +23,7 @@ type WordTablePropsType = {
 export default function WordTable(props: WordTablePropsType) {
     //redux
     const dispatch = useAppDispatch();
-    const {changeRatingWord} = wordsSlice.actions;
+    const {changeRatingWord, removeWord} = wordsSlice.actions;
 
     return (
         <Box sx={{paddingTop: 2, paddingBottom: 2}}>
@@ -91,30 +91,15 @@ export default function WordTable(props: WordTablePropsType) {
                                             >
                                                 <ReplayIcon color={word.rating === 0 ? 'disabled' :'warning'}/>
                                             </IconButton>
-                                            <IconButton aria-label="delete">
+                                            <IconButton
+                                                aria-label="delete"
+                                                onClick={() => {
+                                                    dispatch(removeWord({id: word.id}))
+                                                }}
+                                            >
                                                 <DeleteIcon color={'error'}/>
                                             </IconButton>
                                         </Stack>
-                                        {/*</Box>*/}
-                                        {/*<Button*/}
-                                        {/*    onClick={() => {*/}
-                                        {/*        dispatch(changeRatingWord({id: word.id, newRating: 0}));*/}
-                                        {/*    }}*/}
-                                        {/*    disabled={word.rating === 0}*/}
-                                        {/*    color={"error"}*/}
-                                        {/*    sx={{marginBottom: 1}}*/}
-                                        {/*    variant={'outlined'}*/}
-                                        {/*    size={'small'}*/}
-                                        {/*>изучать заново</Button>*/}
-                                        {/*<Button*/}
-                                        {/*    onClick={() => {*/}
-                                        {/*        dispatch(changeRatingWord({id: word.id, newRating: 3}));*/}
-                                        {/*    }}*/}
-                                        {/*    disabled={word.rating === 3}*/}
-                                        {/*    color={"success"}*/}
-                                        {/*    variant={'outlined'}*/}
-                                        {/*    size={'small'}*/}
-                                        {/*>в изученные</Button>*/}
                                     </TableCell>
                                 </TableRow>
                             )
