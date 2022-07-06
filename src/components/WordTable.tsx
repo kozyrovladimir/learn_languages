@@ -10,7 +10,7 @@ import {wordsSlice, WordsStateType} from "../store/words-store";
 import {useAppDispatch} from "../hooks/redux";
 import StarRating from "./StarRating";
 import Typography from '@mui/material/Typography';
-import {Box, Button, IconButton, Modal, Stack} from "@mui/material";
+import {Box, IconButton, Modal, Stack} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
