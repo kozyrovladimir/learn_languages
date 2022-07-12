@@ -41,6 +41,13 @@ export const wordsSlice = createSlice({
                 targetWord.rus = action.payload.newWord;
             }
         },
+        changeWord(state = initialState, action: PayloadAction<{ newWorEng: string, newWorRus: string,id: string }>) {
+            const targetWord = state.find(word => word.id === action.payload.id);
+            if (targetWord) {
+                targetWord.rus = action.payload.newWorRus;
+                targetWord.eng = action.payload.newWorEng;
+            }
+        },
         changeRatingWord(state = initialState, action: PayloadAction<{ newRating: RatingType, id: string }>) {
             const targetWord = state.find(word => word.id === action.payload.id);
             if (targetWord) {
