@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,15 +6,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {wordsSlice, WordsStateType} from "../store/words-store";
+import {wordsSlice, WordsStateType, WordType} from "../store/words-store";
 import {useAppDispatch} from "../hooks/redux";
 import StarRating from "./StarRating";
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, Modal, Stack} from "@mui/material";
+import {Box, Button, IconButton, Modal, Stack, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
+import * as yup from "yup";
+import {useFormik} from "formik";
+import {deepTranslateAPI} from "../api/deep-translate-api";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -37,12 +40,48 @@ const style = {
 export default function WordTable(props: WordTablePropsType) {
     //state and handlers for modal window
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleOpen = () => {
+        setOpen(true);
+        formik.values.eng = changingWord === null ? '' : changingWord.eng;
+        formik.values.rus = changingWord === null ? '' : changingWord.rus;
+    };
+    const handleClose = () => {
+        setOpen(false);
+        formik.touched.eng = false;
+        formik.touched.rus = false;
+    };
+    const [changingWord, setChangingWord] = useState<WordType | null>(null);
 
     //redux
     const dispatch = useAppDispatch();
     const {changeRatingWord, removeWord} = wordsSlice.actions;
+
+    //using formik
+    const validationSchema = yup.object({
+        rus: yup.string()
+            .max(20, 'Максимум 20 символов!')
+            .required('Поле обязательно!')
+            .trim(),
+        eng: yup.string()
+            .max(20, 'Максимум 20 символов!')
+            .required('Поле обязательно!')
+            .trim(),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            rus: '',
+            eng: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            // dispatch(addWord({eng: values.eng, rus: values.rus}));
+            values.rus = '';
+            values.eng = '';
+            formik.touched.eng = false;
+            formik.touched.rus = false;
+        },
+    })
 
     return (
         <>
@@ -52,14 +91,39 @@ export default function WordTable(props: WordTablePropsType) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{mt: 2}}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
-                </Box>
+                <Stack spacing={2} sx={style}>
+                    <TextField
+                        value={formik.values.rus}
+                        onChange={formik.handleChange}
+                        error={formik.touched.eng && Boolean(formik.errors.rus)}
+                        helperText={formik.touched.rus && formik.errors.rus}
+                        id="rus"
+                        name="rus"
+                        label="Rus:"
+                        variant="outlined"
+                        // sx={{marginRight: 2}}
+                        size={'small'}
+                    />
+                    <TextField
+                        value={formik.values.eng}
+                        onChange={formik.handleChange}
+                        error={formik.touched.eng && Boolean(formik.errors.eng)}
+                        helperText={formik.touched.eng && formik.errors.eng}
+                        id="eng"
+                        name="eng"
+                        label="Eng:"
+                        variant="outlined"
+                        // sx={{marginRight: 2}}
+                        size={'small'}
+                    />
+                    <Button
+                        onClick={formik.submitForm}
+                        title={'Подсказка'}
+                        variant={'outlined'}
+                        size={'large'}>
+                        Изменить
+                    </Button>
+                </Stack>
             </Modal>
             <Box sx={{paddingTop: 2, paddingBottom: 2}}>
                 <TableContainer component={Paper}>
@@ -109,7 +173,11 @@ export default function WordTable(props: WordTablePropsType) {
                                             {/*<Box>*/}
                                             <Stack direction="row" spacing={1} justifyContent="center">
                                                 <IconButton
-                                                    onClick={handleOpen}
+                                                    onClick={() => {
+                                                        setChangingWord(word);
+                                                        handleOpen();
+                                                        console.log(word);
+                                                    }}
                                                     aria-label="edit">
                                                     <EditIcon color={'action'}/>
                                                 </IconButton>
