@@ -17,6 +17,7 @@ import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
 import * as yup from "yup";
 import {useFormik} from "formik";
+import PaginationController from './PaginationController';
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -140,6 +141,18 @@ export default function WordTable(props: WordTablePropsType) {
                                 const date = new Date(word.date);
                                 const wordColor = word.rating === 3 ? '#00d700' : '';
                                 const backgroundColorRow = word.rating === 3 ? '#f6fff6' : '';
+
+                                //onclick handlers
+                                const editOnClickHandler = () => {
+                                    handleOpen();
+                                    formik.values.eng = word.eng;
+                                    formik.values.rus = word.rus;
+                                    formik.values.id = word.id;
+                                };
+                                const doneOnClickHandler = () => dispatch(changeRatingWord({id: word.id, newRating: 3}));
+                                const resetOnClickHandler = () =>  dispatch(changeRatingWord({id: word.id, newRating: 0}));
+                                const deleteOnClickHandler = () => dispatch(removeWord({id: word.id}));
+
                                 return (
                                     <TableRow
                                         key={word.id}
@@ -171,30 +184,21 @@ export default function WordTable(props: WordTablePropsType) {
                                             <Stack direction="row" spacing={1} justifyContent="center">
                                                 <IconButton
                                                     title={'Изменить'}
-                                                    onClick={() => {
-                                                        handleOpen();
-                                                        formik.values.eng = word.eng;
-                                                        formik.values.rus = word.rus;
-                                                        formik.values.id = word.id;
-                                                    }}
+                                                    onClick={editOnClickHandler}
                                                     aria-label="edit">
                                                     <EditIcon color={'action'}/>
                                                 </IconButton>
                                                 <IconButton
                                                     title={'В изученные'}
                                                     disabled={word.rating === 3}
-                                                    onClick={() => {
-                                                        dispatch(changeRatingWord({id: word.id, newRating: 3}))
-                                                    }}
+                                                    onClick={doneOnClickHandler}
                                                     aria-label="edit">
                                                     <DoneIcon color={word.rating === 3 ? 'disabled' : 'success'}/>
                                                 </IconButton>
                                                 <IconButton
                                                     title={'Учить заново'}
                                                     disabled={word.rating === 0}
-                                                    onClick={() => {
-                                                        dispatch(changeRatingWord({id: word.id, newRating: 0}))
-                                                    }}
+                                                    onClick={resetOnClickHandler}
                                                     aria-label="edit"
                                                 >
                                                     <ReplayIcon color={word.rating === 0 ? 'disabled' : 'warning'}/>
@@ -202,9 +206,7 @@ export default function WordTable(props: WordTablePropsType) {
                                                 <IconButton
                                                     title={'Удалить'}
                                                     aria-label="delete"
-                                                    onClick={() => {
-                                                        dispatch(removeWord({id: word.id}))
-                                                    }}
+                                                    onClick={deleteOnClickHandler}
                                                 >
                                                     <DeleteIcon color={'error'}/>
                                                 </IconButton>
@@ -217,6 +219,10 @@ export default function WordTable(props: WordTablePropsType) {
                     </Table>
                 </TableContainer>
             </Box>
+            <PaginationController
+                page={1}
+                numPages={10}
+            />
         </>
     );
 }
