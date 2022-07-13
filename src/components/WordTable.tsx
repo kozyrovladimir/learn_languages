@@ -129,11 +129,11 @@ export default function WordTable(props: WordTablePropsType) {
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Rus:</TableCell>
-                                <TableCell>Eng:</TableCell>
-                                <TableCell>Прогресс изучения:</TableCell>
-                                <TableCell>Дата добавления:</TableCell>
-                                <TableCell>Действия:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Rus:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Eng:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Прогресс изучения:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Дата добавления:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Действия:</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
