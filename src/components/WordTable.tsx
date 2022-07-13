@@ -170,6 +170,7 @@ export default function WordTable(props: WordTablePropsType) {
                                             {/*<Box>*/}
                                             <Stack direction="row" spacing={1} justifyContent="center">
                                                 <IconButton
+                                                    title={'Изменить'}
                                                     onClick={() => {
                                                         handleOpen();
                                                         formik.values.eng = word.eng;
@@ -180,6 +181,7 @@ export default function WordTable(props: WordTablePropsType) {
                                                     <EditIcon color={'action'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'В изученные'}
                                                     disabled={word.rating === 3}
                                                     onClick={() => {
                                                         dispatch(changeRatingWord({id: word.id, newRating: 3}))
@@ -188,6 +190,7 @@ export default function WordTable(props: WordTablePropsType) {
                                                     <DoneIcon color={word.rating === 3 ? 'disabled' : 'success'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'Учить заново'}
                                                     disabled={word.rating === 0}
                                                     onClick={() => {
                                                         dispatch(changeRatingWord({id: word.id, newRating: 0}))
@@ -197,6 +200,7 @@ export default function WordTable(props: WordTablePropsType) {
                                                     <ReplayIcon color={word.rating === 0 ? 'disabled' : 'warning'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'Удалить'}
                                                     aria-label="delete"
                                                     onClick={() => {
                                                         dispatch(removeWord({id: word.id}))
