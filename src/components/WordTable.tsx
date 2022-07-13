@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {wordsSlice, WordsStateType, WordType} from "../store/words-store";
+import {wordsSlice, WordsStateType} from "../store/words-store";
 import {useAppDispatch} from "../hooks/redux";
 import StarRating from "./StarRating";
 import Typography from '@mui/material/Typography';
@@ -17,7 +17,6 @@ import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {deepTranslateAPI} from "../api/deep-translate-api";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -42,19 +41,15 @@ export default function WordTable(props: WordTablePropsType) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
-        formik.values.eng = changingWord === null ? '' : changingWord.eng;
-        formik.values.rus = changingWord === null ? '' : changingWord.rus;
     };
     const handleClose = () => {
         setOpen(false);
         formik.touched.eng = false;
         formik.touched.rus = false;
     };
-    const [changingWord, setChangingWord] = useState<WordType | null>(null);
-
     //redux
     const dispatch = useAppDispatch();
-    const {changeRatingWord, removeWord} = wordsSlice.actions;
+    const {changeRatingWord, removeWord, changeWord} = wordsSlice.actions;
 
     //using formik
     const validationSchema = yup.object({
@@ -72,14 +67,17 @@ export default function WordTable(props: WordTablePropsType) {
         initialValues: {
             rus: '',
             eng: '',
+            id: '',
         },
         validationSchema: validationSchema,
         onSubmit: (values) => {
-            // dispatch(addWord({eng: values.eng, rus: values.rus}));
+            dispatch(changeWord({newWorEng: values.eng, newWorRus: values.rus, id: values.id}));
             values.rus = '';
             values.eng = '';
+            values.id = '';
             formik.touched.eng = false;
             formik.touched.rus = false;
+            handleClose();
         },
     })
 
@@ -142,7 +140,6 @@ export default function WordTable(props: WordTablePropsType) {
                                 const date = new Date(word.date);
                                 const wordColor = word.rating === 3 ? '#00d700' : '';
                                 const backgroundColorRow = word.rating === 3 ? '#f6fff6' : '';
-
                                 return (
                                     <TableRow
                                         key={word.id}
@@ -174,9 +171,10 @@ export default function WordTable(props: WordTablePropsType) {
                                             <Stack direction="row" spacing={1} justifyContent="center">
                                                 <IconButton
                                                     onClick={() => {
-                                                        setChangingWord(word);
                                                         handleOpen();
-                                                        console.log(word);
+                                                        formik.values.eng = word.eng;
+                                                        formik.values.rus = word.rus;
+                                                        formik.values.id = word.id;
                                                     }}
                                                     aria-label="edit">
                                                     <EditIcon color={'action'}/>
