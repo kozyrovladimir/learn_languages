@@ -93,9 +93,9 @@ const LearnWordpage = () => {
 
     if(wordToStudy) {
         return (
-        <Container>
-            <Typography variant='h4' align='center' sx={{mb: 2}}>Переведите: <span style={{color: 'red'}}>{wordToStudy.rus}</span></Typography>
-            <Box sx={{mb: 2}}>
+        <>
+            <Box sx={{mb: 2, mt: 1}}>
+                <Typography variant='h4' sx={{mb: 2}}>Переведите: <span style={{color: 'gray'}}>{wordToStudy.rus}</span></Typography>
                 <TextField
                     disabled={!!answerStatus}
                     value={formik.values.answer}
@@ -130,16 +130,16 @@ const LearnWordpage = () => {
                 </Button>
             </Box>
             <Box>
-                {answerStatus ? <Typography variant='h5' align='center' color={answerStatus === 'He верно!' ? 'red' : 'green'}>{answerStatus}</Typography> : null}
-                {answerStatus ? <Typography variant='h5' align='center' color='darkblue'>Правильный ответ: {wordToStudy.eng}</Typography> : null}
+                {answerStatus ? <Typography variant='h5' color={answerStatus === 'He верно!' ? 'red' : 'green'}>{answerStatus}</Typography> : null}
+                {answerStatus === 'He верно!' ? <Typography variant='h5' color='darkblue'>Правильный ответ: {wordToStudy.eng}</Typography> : null}
             </Box>
-        </Container>
+        </>
         )
     } else {
         return (
-            <Container>
+            <>
                 <Typography variant='h3' align='center'>Нет слов для изучения</Typography>
-            </Container>
+            </>
         )
     }
 };

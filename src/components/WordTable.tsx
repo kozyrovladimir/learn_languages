@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,11 +10,15 @@ import {wordsSlice, WordsStateType} from "../store/words-store";
 import {useAppDispatch} from "../hooks/redux";
 import StarRating from "./StarRating";
 import Typography from '@mui/material/Typography';
-import {Box, IconButton, Modal, Stack} from "@mui/material";
+import {Box, Button, IconButton, Modal, Stack, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
+import * as yup from "yup";
+import {useFormik} from "formik";
+import PaginationController from './PaginationController';
+import {newPackingItems} from "../utils/utils";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -37,12 +41,53 @@ const style = {
 export default function WordTable(props: WordTablePropsType) {
     //state and handlers for modal window
     const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+        formik.touched.eng = false;
+        formik.touched.rus = false;
+    };
     //redux
     const dispatch = useAppDispatch();
-    const {changeRatingWord, removeWord} = wordsSlice.actions;
+    const {changeRatingWord, removeWord, changeWord} = wordsSlice.actions;
+
+    //state for pagination
+    const [pagesState, setPagesState] = useState<{currentPage: number, allPages: number}>({currentPage:1, allPages:1})
+
+    //packing videos
+    const packagesOfWords = newPackingItems(props.words, 10);
+
+    //using formik
+    const validationSchema = yup.object({
+        rus: yup.string()
+            .max(20, 'Максимум 20 символов!')
+            .required('Поле обязательно!')
+            .trim(),
+        eng: yup.string()
+            .max(20, 'Максимум 20 символов!')
+            .required('Поле обязательно!')
+            .trim(),
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            rus: '',
+            eng: '',
+            id: '',
+        },
+        validationSchema: validationSchema,
+        onSubmit: (values) => {
+            dispatch(changeWord({newWorEng: values.eng, newWorRus: values.rus, id: values.id}));
+            values.rus = '';
+            values.eng = '';
+            values.id = '';
+            formik.touched.eng = false;
+            formik.touched.rus = false;
+            handleClose();
+        },
+    })
 
     return (
         <>
@@ -52,25 +97,50 @@ export default function WordTable(props: WordTablePropsType) {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{mt: 2}}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
-                </Box>
+                <Stack spacing={2} sx={style}>
+                    <TextField
+                        value={formik.values.rus}
+                        onChange={formik.handleChange}
+                        error={formik.touched.eng && Boolean(formik.errors.rus)}
+                        helperText={formik.touched.rus && formik.errors.rus}
+                        id="rus"
+                        name="rus"
+                        label="Rus:"
+                        variant="outlined"
+                        // sx={{marginRight: 2}}
+                        size={'small'}
+                    />
+                    <TextField
+                        value={formik.values.eng}
+                        onChange={formik.handleChange}
+                        error={formik.touched.eng && Boolean(formik.errors.eng)}
+                        helperText={formik.touched.eng && formik.errors.eng}
+                        id="eng"
+                        name="eng"
+                        label="Eng:"
+                        variant="outlined"
+                        // sx={{marginRight: 2}}
+                        size={'small'}
+                    />
+                    <Button
+                        onClick={formik.submitForm}
+                        title={'Подсказка'}
+                        variant={'outlined'}
+                        size={'large'}>
+                        Изменить
+                    </Button>
+                </Stack>
             </Modal>
-            <Box sx={{paddingTop: 2, paddingBottom: 2}}>
-                <TableContainer component={Paper}>
+            <Box sx={{paddingTop:2, paddingBottom: 2, backdropFilter: 'blur(20px)'}}>
+                <TableContainer sx={{backgroundColor: 'rgba(255,255,255, 0.3)'}} component={Paper}>
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Rus:</TableCell>
-                                <TableCell>Eng:</TableCell>
-                                <TableCell>Прогресс изучения:</TableCell>
-                                <TableCell>Дата добавления:</TableCell>
-                                <TableCell>Действия:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Rus:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Eng:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Прогресс изучения:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Дата добавления:</TableCell>
+                                <TableCell sx={{fontWeight: 'bold'}}>Действия:</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -78,6 +148,17 @@ export default function WordTable(props: WordTablePropsType) {
                                 const date = new Date(word.date);
                                 const wordColor = word.rating === 3 ? '#00d700' : '';
                                 const backgroundColorRow = word.rating === 3 ? '#f6fff6' : '';
+
+                                //onclick handlers
+                                const editOnClickHandler = () => {
+                                    handleOpen();
+                                    formik.values.eng = word.eng;
+                                    formik.values.rus = word.rus;
+                                    formik.values.id = word.id;
+                                };
+                                const doneOnClickHandler = () => dispatch(changeRatingWord({id: word.id, newRating: 3}));
+                                const resetOnClickHandler = () =>  dispatch(changeRatingWord({id: word.id, newRating: 0}));
+                                const deleteOnClickHandler = () => dispatch(removeWord({id: word.id}));
 
                                 return (
                                     <TableRow
@@ -109,32 +190,30 @@ export default function WordTable(props: WordTablePropsType) {
                                             {/*<Box>*/}
                                             <Stack direction="row" spacing={1} justifyContent="center">
                                                 <IconButton
-                                                    onClick={handleOpen}
+                                                    title={'Изменить'}
+                                                    onClick={editOnClickHandler}
                                                     aria-label="edit">
                                                     <EditIcon color={'action'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'В изученные'}
                                                     disabled={word.rating === 3}
-                                                    onClick={() => {
-                                                        dispatch(changeRatingWord({id: word.id, newRating: 3}))
-                                                    }}
+                                                    onClick={doneOnClickHandler}
                                                     aria-label="edit">
                                                     <DoneIcon color={word.rating === 3 ? 'disabled' : 'success'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'Учить заново'}
                                                     disabled={word.rating === 0}
-                                                    onClick={() => {
-                                                        dispatch(changeRatingWord({id: word.id, newRating: 0}))
-                                                    }}
+                                                    onClick={resetOnClickHandler}
                                                     aria-label="edit"
                                                 >
                                                     <ReplayIcon color={word.rating === 0 ? 'disabled' : 'warning'}/>
                                                 </IconButton>
                                                 <IconButton
+                                                    title={'Удалить'}
                                                     aria-label="delete"
-                                                    onClick={() => {
-                                                        dispatch(removeWord({id: word.id}))
-                                                    }}
+                                                    onClick={deleteOnClickHandler}
                                                 >
                                                     <DeleteIcon color={'error'}/>
                                                 </IconButton>
@@ -147,6 +226,10 @@ export default function WordTable(props: WordTablePropsType) {
                     </Table>
                 </TableContainer>
             </Box>
+            <PaginationController
+                page={1}
+                numPages={10}
+            />
         </>
     );
 }

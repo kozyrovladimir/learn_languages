@@ -7,3 +7,13 @@ export function getRandomItem<T>(arr: Array<T>): T {
     console.log(localArr[randomIndex]);
     return localArr[randomIndex];
 }
+
+//function for packing items in arrays for pagination
+export function newPackingItems<T>(items: Array<T>, num: number): Array<T>[]{
+    const array: Array<T> = JSON.parse(JSON.stringify(items));
+    const packages: Array<T>[] = [];
+    for (let i = 0; i < Math.ceil(array.length / num); i++) {
+        packages[i] = array.slice((i * num), (i * num) + num);
+    }
+    return packages;
+}

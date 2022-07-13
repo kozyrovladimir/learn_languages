@@ -79,7 +79,7 @@ const AddWordFromApi = () => {
                     </LoadingButton>
                 </Box>
                 <Box sx={{mb: 2}}>
-                    {translatedWord ? <Typography>Rus: {translatedWord.rus}. Eng: {translatedWord.eng}.</Typography> : null}
+                    {translatedWord ? <Typography mb={2}>Rus: {translatedWord.rus}. Eng: {translatedWord.eng}.</Typography> : null}
                     {translatedWord ? <Button
                         onClick={() =>{
                             console.log(translatedWord);
