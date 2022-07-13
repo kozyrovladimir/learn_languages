@@ -123,8 +123,8 @@ export default function WordTable(props: WordTablePropsType) {
                     </Button>
                 </Stack>
             </Modal>
-            <Box sx={{paddingTop: 2, paddingBottom: 2}}>
-                <TableContainer component={Paper}>
+            <Box sx={{paddingTop:2, paddingBottom: 2, backdropFilter: 'blur(20px)'}}>
+                <TableContainer sx={{backgroundColor: 'rgba(255,255,255, 0.3)'}} component={Paper}>
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
                             <TableRow>

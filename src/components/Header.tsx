@@ -1,31 +1,24 @@
 import React from 'react';
-import {Box, Container, Tab, Tabs} from "@mui/material";
+import {Box, Button, Stack} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import Logo from  "../img/L.png"
 
 const Header = () => {
-    const [value, setValue] = React.useState(0);
+    const navigate = useNavigate();
 
-    let navigate = useNavigate();
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-        if(newValue === 0) {
-            navigate('/')
-        }
-        if(newValue === 1) {
-            navigate('/learn-words')
-        }
-    };
+    const navigateToMainPage = () => navigate('/');
+    const navigateToLearnWordPage = () => navigate('/l');
+    const navigateToAddWordPage = () => navigate('/learn-words');
 
     return (
-        <Container>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Добавить слова" />
-                    <Tab label="Изучать" />
-                </Tabs>
-            </Box>
-        </Container>
+            <Stack direction={'row'} spacing={6} alignItems={'center'}>
+                <Box component={'img'} src={Logo} sx={{width: 100}}></Box>
+                <Stack height={40} direction={'row'} spacing={2}>
+                    <Button onClick={navigateToMainPage}>Главная</Button>
+                    <Button onClick={navigateToLearnWordPage}>Добавить слова</Button>
+                    <Button onClick={navigateToAddWordPage}>Изучать слова</Button>
+                </Stack>
+            </Stack>
     );
 };
 
