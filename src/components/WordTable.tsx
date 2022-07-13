@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,6 +18,7 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import * as yup from "yup";
 import {useFormik} from "formik";
 import PaginationController from './PaginationController';
+import {newPackingItems} from "../utils/utils";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -51,6 +52,12 @@ export default function WordTable(props: WordTablePropsType) {
     //redux
     const dispatch = useAppDispatch();
     const {changeRatingWord, removeWord, changeWord} = wordsSlice.actions;
+
+    //state for pagination
+    const [pagesState, setPagesState] = useState<{currentPage: number, allPages: number}>({currentPage:1, allPages:1})
+
+    //packing videos
+    const packagesOfWords = newPackingItems(props.words, 10);
 
     //using formik
     const validationSchema = yup.object({
