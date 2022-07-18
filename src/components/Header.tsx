@@ -7,7 +7,6 @@ const Header = () => {
     const navigate = useNavigate();
 
     const navigateToMainPage = () => navigate('/');
-    const navigateToLearnWordPage = () => navigate('/l');
     const navigateToAddWordPage = () => navigate('/learn-words');
 
     return (
@@ -15,7 +14,6 @@ const Header = () => {
                 <Box component={'img'} src={Logo} sx={{width: 100}}></Box>
                 <Stack height={40} direction={'row'} spacing={2}>
                     <Button onClick={navigateToMainPage}>Главная</Button>
-                    <Button onClick={navigateToLearnWordPage}>Добавить слова</Button>
                     <Button onClick={navigateToAddWordPage}>Изучать слова</Button>
                 </Stack>
             </Stack>
