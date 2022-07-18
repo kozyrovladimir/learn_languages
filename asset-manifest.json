@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/learn-language/static/css/main.d99ad29e.css",
-    "main.js": "/learn-language/static/js/main.c03f9fa0.js",
-    "static/js/787.8efebf2c.chunk.js": "/learn-language/static/js/787.8efebf2c.chunk.js",
-    "static/media/L.png": "/learn-language/static/media/L.50b87096979a4a914408.png",
-    "static/media/subtle-prism.svg": "/learn-language/static/media/subtle-prism.71c55eb7ca8e333072cb.svg",
-    "index.html": "/learn-language/index.html",
-    "main.d99ad29e.css.map": "/learn-language/static/css/main.d99ad29e.css.map",
-    "main.c03f9fa0.js.map": "/learn-language/static/js/main.c03f9fa0.js.map",
-    "787.8efebf2c.chunk.js.map": "/learn-language/static/js/787.8efebf2c.chunk.js.map"
+    "main.css": "/learn_languages/static/css/main.e8cf724e.css",
+    "main.js": "/learn_languages/static/js/main.b202f4ed.js",
+    "static/js/787.8efebf2c.chunk.js": "/learn_languages/static/js/787.8efebf2c.chunk.js",
+    "static/media/L.png": "/learn_languages/static/media/L.50b87096979a4a914408.png",
+    "static/media/subtle-prism.svg": "/learn_languages/static/media/subtle-prism.71c55eb7ca8e333072cb.svg",
+    "index.html": "/learn_languages/index.html",
+    "main.e8cf724e.css.map": "/learn_languages/static/css/main.e8cf724e.css.map",
+    "main.b202f4ed.js.map": "/learn_languages/static/js/main.b202f4ed.js.map",
+    "787.8efebf2c.chunk.js.map": "/learn_languages/static/js/787.8efebf2c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d99ad29e.css",
-    "static/js/main.c03f9fa0.js"
+    "static/css/main.e8cf724e.css",
+    "static/js/main.b202f4ed.js"
   ]
 }
