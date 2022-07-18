@@ -58,7 +58,7 @@ export const wordsSlice = createSlice({
                 targetWord.rus = action.payload.newWord;
             }
         },
-        changeWord(state = initialState, action: PayloadAction<{ newWorEng: string, newWorRus: string,id: string }>) {
+        changeWord(state = initialState, action: PayloadAction<{ newWorEng: string, newWorRus: string, id: string }>) {
             const targetWord = state.find(word => word.id === action.payload.id);
             if (targetWord) {
                 targetWord.rus = action.payload.newWorRus;
@@ -75,7 +75,8 @@ export const wordsSlice = createSlice({
             const targetIndex = state.findIndex(word => {
                 return word.id === action.payload.id
             });
-            if (targetIndex) {
+            console.log(targetIndex)
+            if (targetIndex || targetIndex === 0) {
                 state.splice(targetIndex, 1)
             }
         },
