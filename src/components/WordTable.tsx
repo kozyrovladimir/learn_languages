@@ -54,7 +54,8 @@ export default function WordTable(props: WordTablePropsType) {
     const {changeRatingWord, removeWord, changeWord} = wordsSlice.actions;
 
     //state for pagination
-    const [pagesState, setPagesState] = useState<{currentPage: number, allPages: number}>({currentPage:1, allPages:1})
+    const [pagesState, setPagesState] = useState<{currentPage: number}>({currentPage:1});
+    const changePageFunc = (page: number) => setPagesState({currentPage: page});
 
     //packing videos
     const packagesOfWords = newPackingItems(props.words, 10);
@@ -144,7 +145,7 @@ export default function WordTable(props: WordTablePropsType) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.words.map((word) => {
+                            {packagesOfWords[pagesState.currentPage - 1].map((word) => {
                                 const date = new Date(word.date);
                                 const wordColor = word.rating === 3 ? '#00d700' : '';
                                 const backgroundColorRow = word.rating === 3 ? '#f6fff6' : '';
@@ -227,8 +228,9 @@ export default function WordTable(props: WordTablePropsType) {
                 </TableContainer>
             </Box>
             <PaginationController
-                page={1}
-                numPages={10}
+                page={pagesState.currentPage}
+                numPages={packagesOfWords.length}
+                changePageFunc={changePageFunc}
             />
         </>
     );

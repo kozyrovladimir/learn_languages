@@ -9,13 +9,15 @@ import {useDispatch} from "react-redux";
 
 type VideoPaginationRouterPropsType = {
     numPages: number,
-    page: number
+    page: number,
+    changePageFunc: (page: number) => void
 }
 
 export default function _VideoPaginationRouter(props: VideoPaginationRouterPropsType) {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     const handleChangeTileView = (event: React.ChangeEvent<unknown>, value: number) => {
         //dispatch(setCurrentPageAPITileAC(value))
+        props.changePageFunc(value);
     };
     return (
         <Container sx={{display: 'flex', justifyContent: 'center', pt: 2, pb: 2}}>

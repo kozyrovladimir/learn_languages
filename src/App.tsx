@@ -10,7 +10,7 @@ import {Container} from "@mui/material";
 function App() {
     return (
         <div className="App">
-            <Container>
+            <Container sx={{minHeight: '100vh', position: 'relative'}}>
                 <Header/>
                 <Routes>
                     <Route path='/' element={<AddWordsPage/>}/>
