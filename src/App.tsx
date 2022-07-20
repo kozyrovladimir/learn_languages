@@ -11,7 +11,7 @@ import {RoutesEnum} from "./constants/routes";
 function App() {
     return (
         <div className="App">
-            <Container sx={{minHeight: '100vh', position: 'relative'}}>
+            <Container sx={appContainerStyle}>
                 <Header/>
                 <Routes>
                     <Route path={RoutesEnum.AddWordPage} element={<AddWordsPage/>}/>
@@ -22,5 +22,7 @@ function App() {
         </div>
     );
 }
+
+const appContainerStyle = {minHeight: '100vh', position: 'relative'};
 
 export default App;
