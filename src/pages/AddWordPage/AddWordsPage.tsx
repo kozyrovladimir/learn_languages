@@ -1,6 +1,6 @@
 import React from 'react';
 import AddWordForm from "../../components/AddWordForm/AddWordForm";
-import WordTable from '../../components/WordTable/components/WordTable';
+import WordTable from '../../components/WordTable/WordTable';
 import {useAppSelector} from "../../hooks/redux";
 import AddWordFromApi from "../../components/AddWordFromApi/AddWordFromAPI";
 
