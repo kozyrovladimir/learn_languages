@@ -9,17 +9,17 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import {Translate} from '@mui/icons-material';
 
 const AddWordFromApi = () => {
-    //redux
+
     const dispatch = useAppDispatch();
     const {addWord} = wordsSlice.actions;
 
-    //translated word state
+
     const[translatedWord, setTranslatedWord] = useState<null | {rus: string, eng: string}>(null);
 
-    //loading state
+
     const[loading, setLoading] = useState<boolean>(false);
 
-    //using formik
+
     const validationSchema = yup.object({
         translateWord: yup.string()
             .max(20, 'Не больше 20 символов!')
