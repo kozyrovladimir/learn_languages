@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
-import {wordsSlice, WordType} from "../store/words-store";
-import {useAppDispatch, useAppSelector} from "../hooks/redux";
-import {getRandomItem} from "../utils/utils";
+import {wordsSlice, WordType} from "../../store/reducers/words-store";
+import {useAppDispatch, useAppSelector} from "../../hooks/redux";
+import {getRandomItem} from "../../utils/utils";
 import * as yup from "yup";
 import {useFormik} from "formik";
 

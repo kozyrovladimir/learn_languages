@@ -6,9 +6,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {wordsSlice, WordsStateType} from "../store/words-store";
-import {useAppDispatch} from "../hooks/redux";
-import StarRating from "./StarRating";
+import {wordsSlice, WordsStateType} from "../../../store/reducers/words-store";
+import {useAppDispatch} from "../../../hooks/redux";
+import StarRating from "../../StarRating";
 import Typography from '@mui/material/Typography';
 import {Box, Button, IconButton, Modal, Stack, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,8 +17,8 @@ import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
 import * as yup from "yup";
 import {useFormik} from "formik";
-import PaginationController from './PaginationController';
-import {newPackingItems} from "../utils/utils";
+import PaginationController from '../../PaginationController/PaginationController';
+import {newPackingItems} from "../../../utils/utils";
 
 type WordTablePropsType = {
     words: WordsStateType

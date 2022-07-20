@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import wordsReducer from "./words-store";
+import wordsReducer from "./reducers/words-store";
 import {configureStore} from "@reduxjs/toolkit";
 import { persistStore, persistReducer,} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
@@ -15,7 +15,6 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-//redux toolkit
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) =>

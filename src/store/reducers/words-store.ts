@@ -1,7 +1,6 @@
 import {v1} from 'uuid';
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-//word types
 export type RatingType = 0 | 1 | 2 | 3;
 
 export type WordType = {
@@ -12,10 +11,8 @@ export type WordType = {
     date: Date,
 }
 
-//store types
 export type WordsStateType = Array<WordType>;
 
-//initial state type
 const initialState: Array<WordType> = [
     {rus: 'голова', eng: 'head', date: new Date(), rating: 0, id: v1()},
     {rus: 'брать', eng: 'take', date: new Date(), rating: 0, id: v1()},
@@ -34,8 +31,6 @@ const initialState: Array<WordType> = [
     {rus: 'пример', eng: 'example', date: new Date(), rating: 0, id: v1()},
     {rus: 'говорить', eng: 'talk', date: new Date(), rating: 0, id: v1()},
 ];
-
-//redux toolkit
 
 export const wordsSlice = createSlice({
     name: 'words',

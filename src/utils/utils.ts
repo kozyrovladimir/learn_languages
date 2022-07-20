@@ -8,7 +8,6 @@ export function getRandomItem<T>(arr: Array<T>): T {
     return localArr[randomIndex];
 }
 
-//function for packing items in arrays for pagination
 export function newPackingItems<T>(items: Array<T>, num: number): Array<T>[]{
     const array: Array<T> = JSON.parse(JSON.stringify(items));
     const packages: Array<T>[] = [];
@@ -17,3 +16,5 @@ export function newPackingItems<T>(items: Array<T>, num: number): Array<T>[]{
     }
     return packages;
 }
+
+// export function

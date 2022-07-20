@@ -1,6 +1,6 @@
 import React from 'react';
 import StarIcon from '@mui/icons-material/Star';
-import {RatingType} from "../store/words-store";
+import {RatingType} from "../store/reducers/words-store";
 import {StarBorder} from "@mui/icons-material";
 
 type StarRatingPropsType = {

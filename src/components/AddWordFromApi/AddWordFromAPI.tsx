@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Box, Button, TextField, Typography} from "@mui/material";
 import * as yup from "yup";
 import {useFormik} from "formik";
-import {deepTranslateAPI} from "../api/deep-translate-api";
-import {useAppDispatch} from "../hooks/redux";
-import {wordsSlice} from "../store/words-store";
+import {deepTranslateAPI} from "../../api/deep-translate-api";
+import {useAppDispatch} from "../../hooks/redux";
+import {wordsSlice} from "../../store/reducers/words-store";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {Translate} from '@mui/icons-material';
 
