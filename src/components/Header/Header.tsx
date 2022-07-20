@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Button, Stack} from "@mui/material";
 import {useNavigate} from "react-router-dom";
-import Logo from  "../img/L.png"
+import Logo from "../../img/L.png"
 
 const Header = () => {
     const navigate = useNavigate();

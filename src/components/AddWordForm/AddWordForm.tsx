@@ -1,32 +1,20 @@
 import React from 'react';
 import {Box, Button, TextField} from "@mui/material";
-import * as yup from "yup";
 import {useFormik} from "formik";
-import {wordsSlice} from "../store/words-store";
-import {useAppDispatch} from "../hooks/redux";
+import {wordsSlice} from "../../store/reducers/words-store";
+import {useAppDispatch} from "../../hooks/redux";
+import {validationSchemaRusEng} from "../../constants/validation_schema";
 
 const AddWordForm = () => {
     const dispatch = useAppDispatch();
     const {addWord} = wordsSlice.actions;
-
-    //using formik
-    const validationSchema = yup.object({
-        rus: yup.string()
-            .max(20, 'Максимум 20 символов!')
-            .required('Поле обязательно!')
-            .trim(),
-        eng: yup.string()
-            .max(20, 'Максимум 20 символов!')
-            .required('Поле обязательно!')
-            .trim(),
-    });
 
     const formik = useFormik({
         initialValues: {
             rus: '',
             eng: '',
         },
-        validationSchema: validationSchema,
+        validationSchema: validationSchemaRusEng,
         onSubmit: (values) => {
             dispatch(addWord({eng: values.eng, rus: values.rus}));
             values.rus = '';

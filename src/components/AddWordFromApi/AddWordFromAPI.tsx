@@ -1,37 +1,29 @@
 import React, {useState} from 'react';
 import {Box, Button, TextField, Typography} from "@mui/material";
-import * as yup from "yup";
 import {useFormik} from "formik";
-import {deepTranslateAPI} from "../api/deep-translate-api";
-import {useAppDispatch} from "../hooks/redux";
-import {wordsSlice} from "../store/words-store";
+import {deepTranslateAPI} from "../../api/deep-translate-api";
+import {useAppDispatch} from "../../hooks/redux";
+import {wordsSlice} from "../../store/reducers/words-store";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {Translate} from '@mui/icons-material';
+import {validationSchemaTranslate} from "../../constants/validation_schema";
 
 const AddWordFromApi = () => {
-    //redux
+
     const dispatch = useAppDispatch();
     const {addWord} = wordsSlice.actions;
 
-    //translated word state
+
     const[translatedWord, setTranslatedWord] = useState<null | {rus: string, eng: string}>(null);
 
-    //loading state
-    const[loading, setLoading] = useState<boolean>(false);
 
-    //using formik
-    const validationSchema = yup.object({
-        translateWord: yup.string()
-            .max(20, 'Не больше 20 символов!')
-            .required('Поле обязательно!')
-            .trim(),
-    });
+    const[loading, setLoading] = useState<boolean>(false);
 
     const formik = useFormik({
         initialValues: {
             translateWord: '',
         },
-        validationSchema: validationSchema,
+        validationSchema: validationSchemaTranslate,
         onSubmit: (values) => {
             setLoading(true);
             deepTranslateAPI.translateRuToEn(values.translateWord)

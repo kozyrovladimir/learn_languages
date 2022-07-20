@@ -6,19 +6,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import {wordsSlice, WordsStateType} from "../store/words-store";
-import {useAppDispatch} from "../hooks/redux";
-import StarRating from "./StarRating";
+import {wordsSlice, WordsStateType} from "../../store/reducers/words-store";
+import {useAppDispatch} from "../../hooks/redux";
+import StarRating from "./components/StarRating";
 import Typography from '@mui/material/Typography';
 import {Box, Button, IconButton, Modal, Stack, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
-import * as yup from "yup";
 import {useFormik} from "formik";
-import PaginationController from './PaginationController';
-import {newPackingItems} from "../utils/utils";
+import PaginationController from '../PaginationController/PaginationController';
+import {newPackingItems} from "../../utils/utils";
+import {validationSchemaRusEng} from "../../constants/validation_schema";
 
 type WordTablePropsType = {
     words: WordsStateType
@@ -60,25 +60,13 @@ export default function WordTable(props: WordTablePropsType) {
     //packing videos
     const packagesOfWords = newPackingItems(props.words, 10);
 
-    //using formik
-    const validationSchema = yup.object({
-        rus: yup.string()
-            .max(20, 'Максимум 20 символов!')
-            .required('Поле обязательно!')
-            .trim(),
-        eng: yup.string()
-            .max(20, 'Максимум 20 символов!')
-            .required('Поле обязательно!')
-            .trim(),
-    });
-
     const formik = useFormik({
         initialValues: {
             rus: '',
             eng: '',
             id: '',
         },
-        validationSchema: validationSchema,
+        validationSchema: validationSchemaRusEng,
         onSubmit: (values) => {
             dispatch(changeWord({newWorEng: values.eng, newWorRus: values.rus, id: values.id}));
             values.rus = '';
@@ -108,7 +96,6 @@ export default function WordTable(props: WordTablePropsType) {
                         name="rus"
                         label="Rus:"
                         variant="outlined"
-                        // sx={{marginRight: 2}}
                         size={'small'}
                     />
                     <TextField
@@ -120,7 +107,6 @@ export default function WordTable(props: WordTablePropsType) {
                         name="eng"
                         label="Eng:"
                         variant="outlined"
-                        // sx={{marginRight: 2}}
                         size={'small'}
                     />
                     <Button
