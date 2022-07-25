@@ -1,93 +1,52 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Box, Button, TextField, Typography} from "@mui/material";
-import {useFormik} from "formik";
-import {deepTranslateAPI} from "../../api/deep-translate-api";
-import {useAppDispatch} from "../../hooks/redux";
-import {wordsSlice} from "../../store/reducers/words-store";
 import LoadingButton from '@mui/lab/LoadingButton';
 import {Translate} from '@mui/icons-material';
-import {validationSchemaTranslate} from "../../constants/validation_schema";
+import {useAddWordFromAPI} from "../../hooks/useAddWordFromAPI";
 
 const AddWordFromApi = () => {
-
-    const dispatch = useAppDispatch();
-    const {addWord} = wordsSlice.actions;
-
-
-    const[translatedWord, setTranslatedWord] = useState<null | {rus: string, eng: string}>(null);
-
-
-    const[loading, setLoading] = useState<boolean>(false);
-
-    const formik = useFormik({
-        initialValues: {
-            translateWord: '',
-        },
-        validationSchema: validationSchemaTranslate,
-        onSubmit: (values) => {
-            setLoading(true);
-            deepTranslateAPI.translateRuToEn(values.translateWord)
-                .then(function (response) {
-                   const translatedWord = response.data.data.translations.translatedText;
-                   setTranslatedWord({rus: values.translateWord, eng: translatedWord});
-                    values.translateWord = '';
-                    formik.touched.translateWord = false;
-                    setLoading(false);
-                })
-                .catch(function (error) {
-                console.error(error);
-                values.translateWord = '';
-                formik.touched.translateWord = false;
-                setLoading(false);
-            });
-        },
-    })
+    const {formik, loading, translatedWord, onClickHandler} = useAddWordFromAPI();
 
     return (
-            <>
-                <h3>Перевести:</h3>
-                <Box sx={{mb: 2}}>
-                    <TextField
-                        disabled={loading}
-                        value={formik.values.translateWord}
-                        onChange={formik.handleChange}
-                        error={formik.touched.translateWord && Boolean(formik.errors.translateWord)}
-                        helperText={formik.touched.translateWord && formik.errors.translateWord}
-                        id="translateWord"
-                        name="translateWord"
-                        size={'small'}
-                        label={'Введите слово (rus):'}
-                        sx={{mr: 2}}
-                    />
-                    <LoadingButton
-                        loading={loading}
-                        startIcon={<Translate/>}
-                        variant='outlined'
-                        size='large'
-                        sx={{mr: 2}}
-                        onClick={formik.submitForm}
-                    >
-                        Перевести
-                    </LoadingButton>
-                </Box>
-                <Box sx={{mb: 2}}>
-                    {translatedWord ? <Typography mb={2}>Rus: {translatedWord.rus}. Eng: {translatedWord.eng}.</Typography> : null}
-                    {translatedWord ? <Button
-                        onClick={() =>{
-                            console.log(translatedWord);
-                            if(translatedWord) {
-                                dispatch(addWord(translatedWord));
-                                setTranslatedWord(null);
-                            }
-                        }}
-                        variant='outlined'
-                        size='large'
-                    >
-                        Добавить для изучения
-                    </Button> : null}
+        <>
+            <h3>Перевести:</h3>
+            <Box sx={{mb: 2}}>
+                <TextField
+                    disabled={loading}
+                    value={formik.values.translateWord}
+                    onChange={formik.handleChange}
+                    error={formik.touched.translateWord && Boolean(formik.errors.translateWord)}
+                    helperText={formik.touched.translateWord && formik.errors.translateWord}
+                    id="translateWord"
+                    name="translateWord"
+                    size={'small'}
+                    label={'Введите слово (rus):'}
+                    sx={{mr: 2}}
+                />
+                <LoadingButton
+                    loading={loading}
+                    startIcon={<Translate/>}
+                    variant='outlined'
+                    size='large'
+                    sx={{mr: 2}}
+                    onClick={formik.submitForm}
+                >
+                    Перевести
+                </LoadingButton>
+            </Box>
+            <Box sx={{mb: 2}}>
+                {translatedWord ?
+                    <Typography mb={2}>Rus: {translatedWord.rus}. Eng: {translatedWord.eng}.</Typography> : null}
+                {translatedWord ? <Button
+                    onClick={onClickHandler}
+                    variant='outlined'
+                    size='large'
+                >
+                    Добавить для изучения
+                </Button> : null}
 
-                </Box>
-            </>
+            </Box>
+        </>
     );
 };
 

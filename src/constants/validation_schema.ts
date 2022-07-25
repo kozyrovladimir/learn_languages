@@ -16,4 +16,4 @@ export const validationSchemaTranslate = yup.object({
         .max(20, 'Не больше 20 символов!')
         .required('Поле обязательно!')
         .trim(),
-});
+}); 

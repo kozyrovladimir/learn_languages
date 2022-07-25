@@ -1,38 +1,19 @@
 import React from 'react';
 import {Box, Button, TextField} from "@mui/material";
-import {useFormik} from "formik";
-import {wordsSlice} from "../../store/reducers/words-store";
-import {useAppDispatch} from "../../hooks/redux";
-import {validationSchemaRusEng} from "../../constants/validation_schema";
+import {useAddWordsForm} from "../../hooks/useAddWordsForm";
 
 const AddWordForm = () => {
-    const dispatch = useAppDispatch();
-    const {addWord} = wordsSlice.actions;
-
-    const formik = useFormik({
-        initialValues: {
-            rus: '',
-            eng: '',
-        },
-        validationSchema: validationSchemaRusEng,
-        onSubmit: (values) => {
-            dispatch(addWord({eng: values.eng, rus: values.rus}));
-            values.rus = '';
-            values.eng = '';
-            formik.touched.eng = false;
-            formik.touched.rus = false;
-        },
-    })
+    const form = useAddWordsForm();
 
     return (
         <Box>
             <h3>Добавить для изучения:</h3>
             <Box sx={{paddingBottom: 2}}>
                 <TextField
-                    value={formik.values.rus}
-                    onChange={formik.handleChange}
-                    error={formik.touched.eng && Boolean(formik.errors.rus)}
-                    helperText={formik.touched.rus && formik.errors.rus}
+                    value={form.values.rus}
+                    onChange={form.handleChange}
+                    error={form.touched.eng && Boolean(form.errors.rus)}
+                    helperText={form.touched.rus && form.errors.rus}
                     id="rus"
                     name="rus"
                     label="Rus:"
@@ -41,10 +22,10 @@ const AddWordForm = () => {
                     size={'small'}
                 />
                 <TextField
-                    value={formik.values.eng}
-                    onChange={formik.handleChange}
-                    error={formik.touched.eng && Boolean(formik.errors.eng)}
-                    helperText={formik.touched.eng && formik.errors.eng}
+                    value={form.values.eng}
+                    onChange={form.handleChange}
+                    error={form.touched.eng && Boolean(form.errors.eng)}
+                    helperText={form.touched.eng && form.errors.eng}
                     id="eng"
                     name="eng"
                     label="Eng:"
@@ -53,7 +34,7 @@ const AddWordForm = () => {
                     size={'small'}
                 />
                 <Button
-                    onClick={formik.submitForm}
+                    onClick={form.submitForm}
                     variant={'outlined'}
                     size={'large'}>
                     Добавить
