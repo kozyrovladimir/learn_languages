@@ -32,7 +32,7 @@ export default function WordTable(props: WordTablePropsType) {
     const [pagesState, setPagesState] = useState<{ currentPage: number }>({currentPage: 1});
     const changePageFunc = (page: number) => setPagesState({currentPage: page});
 
-    const packagesOfWords = newPackingItems(props.words, 10);
+    const packagesOfWords = newPackingItems(words, maxItems);
 
     return (
         <>
