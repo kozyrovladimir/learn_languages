@@ -10,115 +10,38 @@ import {wordsSlice, WordsStateType} from "../../store/reducers/words-store";
 import {useAppDispatch} from "../../hooks/redux";
 import StarRating from "./components/StarRating";
 import Typography from '@mui/material/Typography';
-import {Box, Button, IconButton, Modal, Stack, TextField} from "@mui/material";
+import {Box, IconButton, Stack} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import ReplayIcon from '@mui/icons-material/Replay';
-import {useFormik} from "formik";
 import PaginationController from '../PaginationController/PaginationController';
 import {newPackingItems} from "../../utils/utils";
-import {validationSchemaRusEng} from "../../constants/validation_schema";
+import {useChangeWordModal} from "../../hooks/useChangeWordModal";
+import ChangeWordModal from "./components/ChangeWordModal";
 
 type WordTablePropsType = {
     words: WordsStateType
 }
 
-//temporary styles from example from mui docs
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '1px solid lightgray',
-    borderRadius: 3,
-    boxShadow: 24,
-    p: 4,
-};
-
 export default function WordTable(props: WordTablePropsType) {
-    //state and handlers for modal window
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-        formik.touched.eng = false;
-        formik.touched.rus = false;
-    };
-    //redux
+    const {formik, openModal, closeModal, open} = useChangeWordModal();
     const dispatch = useAppDispatch();
-    const {changeRatingWord, removeWord, changeWord} = wordsSlice.actions;
+    const {changeRatingWord, removeWord} = wordsSlice.actions;
 
-    //state for pagination
-    const [pagesState, setPagesState] = useState<{currentPage: number}>({currentPage:1});
+    const [pagesState, setPagesState] = useState<{ currentPage: number }>({currentPage: 1});
     const changePageFunc = (page: number) => setPagesState({currentPage: page});
 
-    //packing videos
     const packagesOfWords = newPackingItems(props.words, 10);
-
-    const formik = useFormik({
-        initialValues: {
-            rus: '',
-            eng: '',
-            id: '',
-        },
-        validationSchema: validationSchemaRusEng,
-        onSubmit: (values) => {
-            dispatch(changeWord({newWorEng: values.eng, newWorRus: values.rus, id: values.id}));
-            values.rus = '';
-            values.eng = '';
-            values.id = '';
-            formik.touched.eng = false;
-            formik.touched.rus = false;
-            handleClose();
-        },
-    })
 
     return (
         <>
-            <Modal
+            <ChangeWordModal
+                formik={formik}
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Stack spacing={2} sx={style}>
-                    <TextField
-                        value={formik.values.rus}
-                        onChange={formik.handleChange}
-                        error={formik.touched.eng && Boolean(formik.errors.rus)}
-                        helperText={formik.touched.rus && formik.errors.rus}
-                        id="rus"
-                        name="rus"
-                        label="Rus:"
-                        variant="outlined"
-                        size={'small'}
-                    />
-                    <TextField
-                        value={formik.values.eng}
-                        onChange={formik.handleChange}
-                        error={formik.touched.eng && Boolean(formik.errors.eng)}
-                        helperText={formik.touched.eng && formik.errors.eng}
-                        id="eng"
-                        name="eng"
-                        label="Eng:"
-                        variant="outlined"
-                        size={'small'}
-                    />
-                    <Button
-                        onClick={formik.submitForm}
-                        title={'Подсказка'}
-                        variant={'outlined'}
-                        size={'large'}>
-                        Изменить
-                    </Button>
-                </Stack>
-            </Modal>
-            <Box sx={{paddingTop:2, paddingBottom: 2, backdropFilter: 'blur(20px)'}}>
+                closeModal={closeModal}
+            />
+            <Box sx={{paddingTop: 2, paddingBottom: 2, backdropFilter: 'blur(20px)'}}>
                 <TableContainer sx={{backgroundColor: 'rgba(255,255,255, 0.3)'}} component={Paper}>
                     <Table sx={{minWidth: 650}} aria-label="simple table">
                         <TableHead>
@@ -138,13 +61,19 @@ export default function WordTable(props: WordTablePropsType) {
 
                                 //onclick handlers
                                 const editOnClickHandler = () => {
-                                    handleOpen();
+                                    openModal();
                                     formik.values.eng = word.eng;
                                     formik.values.rus = word.rus;
                                     formik.values.id = word.id;
                                 };
-                                const doneOnClickHandler = () => dispatch(changeRatingWord({id: word.id, newRating: 3}));
-                                const resetOnClickHandler = () =>  dispatch(changeRatingWord({id: word.id, newRating: 0}));
+                                const doneOnClickHandler = () => dispatch(changeRatingWord({
+                                    id: word.id,
+                                    newRating: 3
+                                }));
+                                const resetOnClickHandler = () => dispatch(changeRatingWord({
+                                    id: word.id,
+                                    newRating: 0
+                                }));
                                 const deleteOnClickHandler = () => dispatch(removeWord({id: word.id}));
 
                                 return (
