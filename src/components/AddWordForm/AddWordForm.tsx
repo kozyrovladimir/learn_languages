@@ -4,7 +4,6 @@ import {useAddWordsForm} from "../../hooks/useAddWordsForm";
 
 const AddWordForm = () => {
     const form = useAddWordsForm();
-
     return (
         <Box>
             <h3>Добавить для изучения:</h3>
