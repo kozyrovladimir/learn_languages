@@ -14,7 +14,7 @@ export const useValidationSchemaRusEng = (): any => {
       .max(maxSymbolsValue, 'Максимум 20 символов!')
       .required('Поле обязательно!')
       .trim()
-      .notOneOf(rusWords, 'Вы уже изучаете слово!'),
+      .notOneOf(rusWords, 'Слово уже есть в хранилище!'),
     eng: yup
       .string()
       .max(maxSymbolsValue, 'Максимум 20 символов!')
@@ -33,6 +33,6 @@ export const useValidationSchemaTranslate = (): any => {
       .max(maxSymbolsValue, 'Не больше 20 символов!')
       .required('Поле обязательно!')
       .trim()
-      .notOneOf(rusWords, 'Вы уже изучаете слово!'),
+      .notOneOf(rusWords, 'Слово уже есть в хранилище!'),
   });
 };
