@@ -5,8 +5,7 @@ import AddWordFromApi from '../../components/AddWordFromApi/AddWordFromAPI';
 import WordTable from '../../components/WordTable/WordTable';
 import { useAppSelector } from '../../hooks/redux';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const AddWordsPage = () => {
+const AddWordsPage: React.FC = () => {
   const words = useAppSelector(state => state.wordsReducer);
 
   return (
