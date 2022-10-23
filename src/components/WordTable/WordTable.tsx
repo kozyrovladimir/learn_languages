@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -10,7 +10,6 @@ import TableRow from '@mui/material/TableRow';
 
 import { maxItems } from '../../constants/pagination';
 import { useChangeWordModal } from '../../hooks/useChangeWordModal';
-import { usePagination } from '../../hooks/usePagination';
 import { WordsStateType } from '../../store/reducers/words-store';
 import { newPackingItems } from '../../utils/utils';
 import PaginationController from '../PaginationController/PaginationController';
@@ -44,9 +43,19 @@ const styles = {
 
 const WordTable: React.FC<WordTablePropsType> = ({ words }) => {
   const { formik, openModal, closeModal, open } = useChangeWordModal();
-  const { pagesState, changePageFunc } = usePagination();
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const packagesOfWords = newPackingItems(words, maxItems);
+
+  //help define curren page when remove words (fix bug)
+  const defineCurrentPage = (): number => {
+    if (currentPage > packagesOfWords.length) {
+      return packagesOfWords.length;
+    } else {
+      return currentPage;
+    }
+  };
 
   return (
     <>
@@ -63,7 +72,7 @@ const WordTable: React.FC<WordTablePropsType> = ({ words }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {packagesOfWords[pagesState.currentPage - 1].map(word => {
+            {packagesOfWords[defineCurrentPage() - 1].map(word => {
               return (
                 <WordsTableRow
                   key={word.id}
@@ -77,9 +86,9 @@ const WordTable: React.FC<WordTablePropsType> = ({ words }) => {
         </Table>
       </TableContainer>
       <PaginationController
-        page={pagesState.currentPage}
+        page={defineCurrentPage()}
         numPages={packagesOfWords.length}
-        changePageFunc={changePageFunc}
+        changePageFunc={setCurrentPage}
       />
     </>
   );

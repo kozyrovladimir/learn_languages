@@ -9,20 +9,21 @@ type VideoPaginationRouterPropsType = {
   changePageFunc: (page: number) => void;
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export default function _VideoPaginationRouter(props: VideoPaginationRouterPropsType) {
+const VideoPaginationRouter: React.FC<VideoPaginationRouterPropsType> = ({
+  numPages,
+  page,
+  changePageFunc,
+}) => {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleChangeTileView = (event: React.ChangeEvent<unknown>, value: number) => {
-    props.changePageFunc(value);
+    changePageFunc(value);
   };
 
   return (
     <Container sx={{ display: 'flex', justifyContent: 'center', pt: 2, pb: 2 }}>
-      <Pagination
-        count={props.numPages}
-        page={props.page}
-        onChange={handleChangeTileView}
-      />
+      <Pagination count={numPages} page={page} onChange={handleChangeTileView} />
     </Container>
   );
-}
+};
+
+export default VideoPaginationRouter;
