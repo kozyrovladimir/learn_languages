@@ -50,7 +50,9 @@ const LearnWordpage: React.FC = () => {
 
   //check answer
   function checkAnswer(word: string, wordToStudy: WordType): boolean {
-    return wordToStudy && word === wordToStudy.eng;
+    return (
+      wordToStudy && word.trim().toLowerCase() === wordToStudy.eng.trim().toLowerCase()
+    );
   }
 
   //set random word during initialisation this component
