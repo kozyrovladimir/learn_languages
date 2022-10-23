@@ -1,10 +1,25 @@
 # Learn English
-
+___
 Веб приложение для изучения английский слов.
 Демо пожно посмотреть [тут](https://kozyrovladimir.github.io/learn_languages/).
 
-Проект находится в стадии разработки! Возможны ошибки и баги!
+![This is an image](screen_1.jpeg)
+![This is an image](screen_4.jpeg)
+![This is an image](screen_2.jpeg)
+![This is an image](screen_3.jpeg)
+___
 
-- нет мобильной версии;
-- нет проверок на то, существует ли добавляемое слово в таблице;
-- нет возможности поменять язык перевода при добавлении слова(на данный момент только rus - eng перевод);
+# Стек технологий
+
+- React + React Hooks
+- Redux (Redux Toolkit)
+- Typescript
+- Axios
+- Material UI
+- React Router Dom
+- Prettier/ESLint
+- Jest
+
+
+
+
