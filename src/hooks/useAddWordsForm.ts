@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 
-import { validationSchemaRusEng } from '../constants/validation_schema';
+import { useValidationSchemaRusEng } from '../constants/validation_schema';
 import { wordsSlice } from '../store/reducers/words-store';
 
 import { useAppDispatch } from './redux';
@@ -14,7 +14,7 @@ export function useAddWordsForm(): any {
       rus: '',
       eng: '',
     },
-    validationSchema: validationSchemaRusEng,
+    validationSchema: useValidationSchemaRusEng(),
     onSubmit: values => {
       dispatch(addWord({ eng: values.eng, rus: values.rus }));
       // eslint-disable-next-line no-param-reassign

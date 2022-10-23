@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useFormik } from 'formik';
 
-import { validationSchemaRusEng } from '../constants/validation_schema';
+import { useValidationSchemaRusEng } from '../constants/validation_schema';
 import { wordsSlice } from '../store/reducers/words-store';
 
 import { useAppDispatch } from './redux';
@@ -32,7 +32,7 @@ export function useChangeWordModal(): any {
       eng: '',
       id: '',
     },
-    validationSchema: validationSchemaRusEng,
+    validationSchema: useValidationSchemaRusEng(),
     onSubmit: values => {
       dispatch(
         changeWord({ newWorEng: values.eng, newWorRus: values.rus, id: values.id }),
