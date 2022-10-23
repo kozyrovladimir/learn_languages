@@ -23,8 +23,8 @@ const LearnWordpage: React.FC = () => {
   }
 
   //change rating
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function setRatingUp(word: WordType) {
+
+  function setRatingUp(word: WordType): void {
     if (word.rating === Rating.default) {
       dispatch(changeRatingWord({ id: word.id, newRating: 1 }));
     }
@@ -36,8 +36,7 @@ const LearnWordpage: React.FC = () => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function setRatingDown(word: WordType) {
+  function setRatingDown(word: WordType): void {
     if (word.rating === Rating.high) {
       dispatch(changeRatingWord({ id: word.id, newRating: 2 }));
     }
@@ -117,18 +116,19 @@ const LearnWordpage: React.FC = () => {
             name="answer"
             size={'small'}
             label={'Введите перевод:'}
-            sx={{ mr: 2 }}
+            sx={{ m: 1 }}
           />
           <Button
             disabled={!!answerStatus}
             variant="outlined"
             size="large"
-            sx={{ mr: 2 }}
+            sx={{ m: 1 }}
             onClick={formik.submitForm}
           >
             Проверить
           </Button>
           <Button
+            sx={{ m: 1 }}
             onClick={() => {
               setAnswerStatus(null);
               setWord();

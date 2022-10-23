@@ -7,20 +7,18 @@ import { wordsSlice } from '../store/reducers/words-store';
 
 import { useAppDispatch } from './redux';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function useChangeWordModal() {
+export function useChangeWordModal(): any {
   const [open, setOpen] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const openModal = () => {
+
+  const openModal = (): void => {
     setOpen(true);
   };
-  const closeModal = () => {
+  const closeModal = (): void => {
     setOpen(false);
     resetTouched();
   };
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function resetTouched() {
+  function resetTouched(): void {
     formik.touched.eng = false;
     formik.touched.rus = false;
   }

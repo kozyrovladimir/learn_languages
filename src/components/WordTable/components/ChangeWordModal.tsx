@@ -23,24 +23,24 @@ type ChangeWordModalType = {
   closeModal: () => void;
 };
 
-const ChangeWordModal = (props: ChangeWordModalType) => {
-  const onClickHandler = () => {
-    props.formik.submitForm();
+const ChangeWordModal: React.FC<ChangeWordModalType> = ({ formik, open, closeModal }) => {
+  const onClickHandler = (): void => {
+    formik.submitForm();
   };
 
   return (
     <Modal
-      open={props.open}
-      onClose={props.closeModal}
+      open={open}
+      onClose={closeModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Stack spacing={2} sx={style}>
         <TextField
-          value={props.formik.values.rus}
-          onChange={props.formik.handleChange}
-          error={props.formik.touched.eng && Boolean(props.formik.errors.rus)}
-          helperText={props.formik.touched.rus && props.formik.errors.rus}
+          value={formik.values.rus}
+          onChange={formik.handleChange}
+          error={formik.touched.eng && Boolean(formik.errors.rus)}
+          helperText={formik.touched.rus && formik.errors.rus}
           id="rus"
           name="rus"
           label="Rus:"
@@ -48,10 +48,10 @@ const ChangeWordModal = (props: ChangeWordModalType) => {
           size={'small'}
         />
         <TextField
-          value={props.formik.values.eng}
-          onChange={props.formik.handleChange}
-          error={props.formik.touched.eng && Boolean(props.formik.errors.eng)}
-          helperText={props.formik.touched.eng && props.formik.errors.eng}
+          value={formik.values.eng}
+          onChange={formik.handleChange}
+          error={formik.touched.eng && Boolean(formik.errors.eng)}
+          helperText={formik.touched.eng && formik.errors.eng}
           id="eng"
           name="eng"
           label="Eng:"

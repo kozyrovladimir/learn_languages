@@ -21,7 +21,7 @@ const AddWordForm = () => {
           name="rus"
           label="Rus:"
           variant="outlined"
-          sx={{ marginRight: 2 }}
+          sx={{ margin: 1 }}
           size={'small'}
         />
         <TextField
@@ -33,10 +33,15 @@ const AddWordForm = () => {
           name="eng"
           label="Eng:"
           variant="outlined"
-          sx={{ marginRight: 2 }}
+          sx={{ margin: 1 }}
           size={'small'}
         />
-        <Button onClick={form.submitForm} variant={'outlined'} size={'large'}>
+        <Button
+          onClick={form.submitForm}
+          variant={'outlined'}
+          size={'large'}
+          sx={{ margin: 1 }}
+        >
           Добавить
         </Button>
       </Box>

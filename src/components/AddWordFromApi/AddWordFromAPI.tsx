@@ -24,14 +24,14 @@ const AddWordFromApi = () => {
           name="translateWord"
           size={'small'}
           label={'Введите слово (rus):'}
-          sx={{ mr: 2 }}
+          sx={{ m: 1 }}
         />
         <LoadingButton
           loading={loading}
           startIcon={<Translate />}
           variant="outlined"
           size="large"
-          sx={{ mr: 2 }}
+          sx={{ m: 1 }}
           onClick={formik.submitForm}
         >
           Перевести
