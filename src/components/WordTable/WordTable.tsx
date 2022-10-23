@@ -42,8 +42,7 @@ const styles = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type,react/function-component-definition
-export default function WordTable({ words }: WordTablePropsType) {
+const WordTable: React.FC<WordTablePropsType> = ({ words }) => {
   const { formik, openModal, closeModal, open } = useChangeWordModal();
   const { pagesState, changePageFunc } = usePagination();
 
@@ -84,4 +83,6 @@ export default function WordTable({ words }: WordTablePropsType) {
       />
     </>
   );
-}
+};
+
+export default WordTable;
