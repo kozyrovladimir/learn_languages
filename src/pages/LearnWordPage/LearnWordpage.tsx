@@ -4,20 +4,19 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
+import { Rating } from '../../constants/rating';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { wordsSlice, WordType } from '../../store/reducers/words-store';
 import { getRandomItem } from '../../utils/utils';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const LearnWordpage = () => {
+const LearnWordpage: React.FC = () => {
   //redux
   const dispatch = useAppDispatch();
   const words = useAppSelector(state => state.wordsReducer);
   const { changeRatingWord } = wordsSlice.actions;
 
   //refresh word to study
-  // eslint-disable-next-line react-hooks/exhaustive-deps,@typescript-eslint/explicit-function-return-type
-  function setWord() {
+  function setWord(): void {
     const initialWord = getRandomItem(words);
 
     setWordToStudy(initialWord);
@@ -26,33 +25,32 @@ const LearnWordpage = () => {
   //change rating
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function setRatingUp(word: WordType) {
-    if (word.rating === 0) {
+    if (word.rating === Rating.default) {
       dispatch(changeRatingWord({ id: word.id, newRating: 1 }));
     }
-    if (word.rating === 1) {
+    if (word.rating === Rating.low) {
       dispatch(changeRatingWord({ id: word.id, newRating: 2 }));
     }
-    if (word.rating === 2) {
+    if (word.rating === Rating.medium) {
       dispatch(changeRatingWord({ id: word.id, newRating: 3 }));
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   function setRatingDown(word: WordType) {
-    if (word.rating === 3) {
+    if (word.rating === Rating.high) {
       dispatch(changeRatingWord({ id: word.id, newRating: 2 }));
     }
-    if (word.rating === 2) {
+    if (word.rating === Rating.medium) {
       dispatch(changeRatingWord({ id: word.id, newRating: 1 }));
     }
-    if (word.rating === 1) {
+    if (word.rating === Rating.low) {
       dispatch(changeRatingWord({ id: word.id, newRating: 0 }));
     }
   }
 
   //check answer
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  function checkAnswer(word: string, wordToStudy: WordType) {
+  function checkAnswer(word: string, wordToStudy: WordType): boolean {
     return wordToStudy && word === wordToStudy.eng;
   }
 
@@ -71,6 +69,7 @@ const LearnWordpage = () => {
   const validationSchema = yup.object({
     answer: yup
       .string()
+      // eslint-disable-next-line no-magic-numbers
       .max(20, 'Слово не может быть больше 20 символов!')
       .required('Поле обязательно!')
       .trim(),

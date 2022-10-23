@@ -2,12 +2,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v1 } from 'uuid';
 
-export type RatingType = 0 | 1 | 2 | 3;
+import { Rating } from '../../constants/rating';
 
 export type WordType = {
   eng: string;
   rus: string;
-  rating: RatingType;
+  rating: Rating;
   id: string;
   date: Date;
 };
@@ -76,7 +76,7 @@ export const wordsSlice = createSlice({
     },
     changeRatingWord(
       state = initialState,
-      action: PayloadAction<{ newRating: RatingType; id: string }>,
+      action: PayloadAction<{ newRating: Rating; id: string }>,
     ) {
       const targetWord = state.find(word => word.id === action.payload.id);
 

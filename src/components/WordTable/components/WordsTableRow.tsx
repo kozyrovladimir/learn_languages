@@ -1,22 +1,22 @@
 /* eslint-disable */
-import React from 'react';
+import React from "react";
 
-import DeleteIcon from '@mui/icons-material/Delete';
-import DoneIcon from '@mui/icons-material/Done';
-import EditIcon from '@mui/icons-material/Edit';
-import ReplayIcon from '@mui/icons-material/Replay';
-import { IconButton, Stack } from '@mui/material';
-import TableCell from '@mui/material/TableCell';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneIcon from "@mui/icons-material/Done";
+import EditIcon from "@mui/icons-material/Edit";
+import ReplayIcon from "@mui/icons-material/Replay";
+import { IconButton, Stack } from "@mui/material";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 // eslint-disable-next-line import/no-unresolved
-import { FormikValues } from 'formik/dist/types';
+import { FormikValues } from "formik/dist/types";
 
-import { highRating } from '../../../constants/rating';
-import { useAppDispatch } from '../../../hooks/redux';
-import { wordsSlice, WordType } from '../../../store/reducers/words-store';
+import { Rating } from "../../../constants/rating";
+import { useAppDispatch } from "../../../hooks/redux";
+import { wordsSlice, WordType } from "../../../store/reducers/words-store";
 
-import StarRating from './StarRating';
+import StarRating from "./StarRating";
 
 type TableRowTypes = {
   openModal: () => void;
@@ -27,8 +27,8 @@ type TableRowTypes = {
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const WordsTableRow = (props: TableRowTypes) => {
   const date = new Date(props.word.date);
-  const wordColor = props.word.rating === highRating ? '#00d700' : '';
-  const backgroundColorRow = props.word.rating === highRating ? '#f6fff6' : '';
+  const wordColor = props.word.rating === Rating.high ? '#00d700' : '';
+  const backgroundColorRow = props.word.rating === Rating.high ? '#f6fff6' : '';
 
   const dispatch = useAppDispatch();
   const { changeRatingWord, removeWord } = wordsSlice.actions;

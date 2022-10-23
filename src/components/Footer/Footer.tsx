@@ -3,10 +3,9 @@ import React from 'react';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedinIcon from '@mui/icons-material/LinkedIn';
 import TelegramIcon from '@mui/icons-material/Telegram';
-import { Container, Stack, IconButton, Typography, Box } from '@mui/material';
+import { Container, Stack, IconButton, Typography } from '@mui/material';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
     <>
       <div style={{ height: '80px' }}></div>

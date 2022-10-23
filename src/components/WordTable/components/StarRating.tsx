@@ -3,30 +3,29 @@ import React from 'react';
 import { StarBorder } from '@mui/icons-material';
 import StarIcon from '@mui/icons-material/Star';
 
-import { highRating, lowRating, mediumRating } from '../../../constants/rating';
-import { RatingType } from '../../../store/reducers/words-store';
+import { Rating } from '../../../constants/rating';
 
 type StarRatingPropsType = {
-  starAmount: RatingType;
+  starAmount: Rating;
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const StarRating = ({ starAmount }: StarRatingPropsType) => {
   return (
     <>
-      {starAmount === highRating ? (
+      {starAmount === Rating.high ? (
         <div>
           <StarIcon sx={{ color: 'gold' }} />
           <StarIcon sx={{ color: 'gold' }} />
           <StarIcon sx={{ color: 'gold' }} />
         </div>
-      ) : starAmount === mediumRating ? (
+      ) : starAmount === Rating.medium ? (
         <div>
           <StarIcon sx={{ color: 'gold' }} />
           <StarIcon sx={{ color: 'gold' }} />
           <StarBorder sx={{ color: 'gold' }} />
         </div>
-      ) : starAmount === lowRating ? (
+      ) : starAmount === Rating.low ? (
         <div>
           <StarIcon sx={{ color: 'gold' }} />
           <StarBorder sx={{ color: 'gold' }} />

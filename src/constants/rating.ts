@@ -1,3 +1,6 @@
-export const lowRating = 1;
-export const mediumRating = 2;
-export const highRating = 3;
+export enum Rating {
+  default = 0,
+  low = 1,
+  medium = 2,
+  high = 3,
+}

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 
 import Logo from '../../img/L.png';
 
-const Header = () => {
+const Header: React.FC = () => {
   const navigate = useNavigate();
 
-  const navigateToMainPage = () => navigate('/');
-  const navigateToAddWordPage = () => navigate('/learn-words');
+  const navigateToMainPage = (): void => navigate('/');
+  const navigateToAddWordPage = (): void => navigate('/learn-words');
 
   return (
     <Stack direction={'row'} spacing={6} alignItems={'center'}>

@@ -1,8 +1,7 @@
-import { v1 } from 'uuid';
+import { v1 } from "uuid";
 
-import { highRating, lowRating, mediumRating } from '../../constants/rating';
-
-import wordsReducer, { wordsSlice, WordsStateType } from './words-store';
+import wordsReducer, { wordsSlice, WordsStateType } from "./words-store";
+import { Rating } from "../../constants/rating";
 
 const { addWord, setWords, changeEngWord, changeRusWord, changeRatingWord, removeWord } =
   wordsSlice.actions;
@@ -36,10 +35,10 @@ test('correct set store', () => {
 
   const newState = wordsReducer(initialState, setWords({ words: newWords }));
 
-  expect(newState.length).toBe(highRating);
+  expect(newState.length).toBe(Rating.high);
   expect(newState[0].rus).toBe('картошка');
   expect(newState[2].eng).toBe('hand');
-  expect(newState[1].rating).toBe(mediumRating);
+  expect(newState[1].rating).toBe(Rating.medium);
 });
 
 test('correct change eng word', () => {
@@ -47,21 +46,21 @@ test('correct change eng word', () => {
     {
       rus: 'картошка',
       eng: 'potatoes',
-      rating: lowRating,
+      rating: Rating.low,
       date: new Date(),
       id: '1',
     },
     {
       rus: 'кот',
       eng: 'сat',
-      rating: mediumRating,
+      rating: Rating.medium,
       date: new Date(),
       id: '2',
     },
     {
       rus: 'рука',
       eng: 'ruka',
-      rating: highRating,
+      rating: Rating.high,
       date: new Date(),
       id: '3',
     },
@@ -81,21 +80,21 @@ test('correct change rus word', () => {
     {
       rus: 'картошка',
       eng: 'potatoes',
-      rating: lowRating,
+      rating: Rating.low,
       date: new Date(),
       id: '1',
     },
     {
       rus: 'kit',
       eng: 'сat',
-      rating: mediumRating,
+      rating: Rating.medium,
       date: new Date(),
       id: '2',
     },
     {
       rus: 'рука',
       eng: 'hand',
-      rating: highRating,
+      rating: Rating.high,
       date: new Date(),
       id: '3',
     },
@@ -112,21 +111,21 @@ test('correct change rating', () => {
     {
       rus: 'картошка',
       eng: 'potatoes',
-      rating: lowRating,
+      rating: Rating.low,
       date: new Date(),
       id: '1',
     },
     {
       rus: 'кот',
       eng: 'сat',
-      rating: mediumRating,
+      rating: Rating.medium,
       date: new Date(),
       id: '2',
     },
     {
       rus: 'рука',
       eng: 'hand',
-      rating: highRating,
+      rating: Rating.high,
       date: new Date(),
       id: '3',
     },
@@ -146,21 +145,21 @@ test('correct remove word', () => {
     {
       rus: 'картошка',
       eng: 'potatoes',
-      rating: lowRating,
+      rating: Rating.low,
       date: new Date(),
       id: '1',
     },
     {
       rus: 'кот',
       eng: 'сat',
-      rating: mediumRating,
+      rating: Rating.medium,
       date: new Date(),
       id: '2',
     },
     {
       rus: 'рука',
       eng: 'hand',
-      rating: highRating,
+      rating: Rating.high,
       date: new Date(),
       id: '3',
     },
