@@ -10,8 +10,7 @@ import { RoutesEnum } from './constants/routes';
 import AddWordsPage from './pages/AddWordPage/AddWordsPage';
 import LearnWordPage from './pages/LearnWordPage/LearnWordpage';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const App = () => {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Container sx={appContainerStyle}>

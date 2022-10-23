@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 
 import { deepTranslateAPI } from '../api/deep-translate-api';
-import { useValidationSchemaTranslate } from '../constants/validation_schema';
 import { wordsSlice } from '../store/reducers/words-store';
 
 import { useAppDispatch } from './redux';
+import { useValidationSchemaTranslate } from './validation_schema';
 
 export function useAddWordFromAPI(): any {
   const dispatch = useAppDispatch();

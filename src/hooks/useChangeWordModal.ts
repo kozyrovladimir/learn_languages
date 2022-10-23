@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useFormik } from 'formik';
 
-import { useValidationSchemaRusEng } from '../constants/validation_schema';
+import { useValidationSchemaRusEng } from './validation_schema';
 import { wordsSlice } from '../store/reducers/words-store';
 
 import { useAppDispatch } from './redux';

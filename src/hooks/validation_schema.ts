@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { useEngWords, useRusWords } from '../hooks/words';
+import { useEngWords, useRusWords } from './words';
 
 const maxSymbolsValue = 20;
 
