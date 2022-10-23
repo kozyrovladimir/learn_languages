@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
+import NotFound from './components/NotFound/NotFound';
 import { RoutesEnum } from './constants/routes';
 import AddWordsPage from './pages/AddWordPage/AddWordsPage';
 import LearnWordPage from './pages/LearnWordPage/LearnWordpage';
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path={RoutesEnum.AddWordPage} element={<AddWordsPage />} />
           <Route path={RoutesEnum.LearnWordPage} element={<LearnWordPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Container>
